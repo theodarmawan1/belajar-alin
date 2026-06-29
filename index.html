@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aljabar Linear Interaktif - Garis, Bidang & Nilai Eigen</title>
+    
+    <!-- Meta SEO -->
+    <meta name="description" content="Aplikasi belajar interaktif Aljabar Linear: Persamaan Garis, Persamaan Bidang, Hubungan Geometris 3D, Nilai Eigen, Vektor Eigen, dan Diagonalisasi Matriks lengkap dengan visualizer 3D dan kalkulator otomatis.">
+    <meta name="author" content="Antigravity AI">
+    
+    <!-- Google Fonts: Outfit & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- KaTeX CSS for Math Formula Rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    
+    <!-- App CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="app-sidebar">
+            <div class="sidebar-header">
+                <div class="logo-icon">
+                    <i data-lucide="layers"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>Aljabar Linear</h1>
+                    <span>Interactive Learning</span>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="nav-section-title">Menu Utama</div>
+                <button class="nav-item active" data-target="dashboard" id="nav-btn-dashboard">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>Dashboard</span>
+                </button>
+                
+                <div class="nav-section-title">Materi Garis & Bidang</div>
+                <button class="nav-item" data-target="theory-1" id="nav-btn-theory-1">
+                    <i data-lucide="compass"></i>
+                    <span>Babak 1: Dasar Vektor</span>
+                </button>
+                <button class="nav-item" data-target="theory-2" id="nav-btn-theory-2">
+                    <i data-lucide="trending-up"></i>
+                    <span>Babak 2: Garis 3D</span>
+                </button>
+                <button class="nav-item" data-target="theory-3" id="nav-btn-theory-3">
+                    <i data-lucide="box"></i>
+                    <span>Babak 3: Bidang 3D</span>
+                </button>
+                <button class="nav-item" data-target="theory-relations" id="nav-btn-theory-relations">
+                    <i data-lucide="git-commit"></i>
+                    <span>Hubungan Geometris</span>
+                </button>
+                
+                <div class="nav-section-title">Latihan Soal</div>
+                <button class="nav-item" data-target="soal-a" id="nav-btn-soal-a">
+                    <i data-lucide="help-circle"></i>
+                    <span>Topic A: Garis & Bidang</span>
+                </button>
+                <button class="nav-item" data-target="soal-c" id="nav-btn-soal-c">
+                    <i data-lucide="grid"></i>
+                    <span>Topic C: Nilai Eigen</span>
+                </button>
+                
+                <div class="nav-section-title">Alat Komputasi</div>
+                <button class="nav-item" data-target="calc-3d" id="nav-btn-calc-3d">
+                    <i data-lucide="calculator"></i>
+                    <span>Kalkulator 3D</span>
+                </button>
+                <button class="nav-item" data-target="calc-eigen" id="nav-btn-calc-eigen">
+                    <i data-lucide="cpu"></i>
+                    <span>Kalkulator Eigen</span>
+                </button>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="theme-status">
+                    <i data-lucide="moon"></i>
+                    <span>Dark Mode Aktif</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="content-header">
+                <div class="header-left">
+                    <button class="toggle-sidebar-btn" id="sidebar-toggle" aria-label="Toggle Sidebar">
+                        <i data-lucide="menu"></i>
+                    </button>
+                    <h2 id="current-section-title">Dashboard Utama</h2>
+                </div>
+                <div class="header-right">
+                    <div class="badge glow-badge">Premium UI v1.0</div>
+                </div>
+            </header>
+
+            <div class="content-body">
+                
+                <!-- SECTION: DASHBOARD -->
+                <section id="sec-dashboard" class="content-section active">
+                    <div class="welcome-banner">
+                        <div class="welcome-text">
+                            <h2>Selamat Datang di Aljabar Linear Interaktif!</h2>
+                            <p>Pelajari konsep persamaan garis, bidang 3D, serta nilai eigen dan diagonalisasi matriks secara visual dengan simulasi interaktif.</p>
+                        </div>
+                        <div class="welcome-decor">
+                            <i data-lucide="graduation-cap" class="huge-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card main-topic-card card-glow-indigo">
+                            <div class="card-icon"><i data-lucide="compass"></i></div>
+                            <h3>Persamaan Garis & Bidang (3D)</h3>
+                            <p>Pelajari bagaimana merumuskan persamaan garis dan bidang di ruang 3D, konsep vektor normal, hubungan sejajar/tegak lurus, dan mencari titik tembus.</p>
+                            <button class="btn btn-primary btn-sm btn-nav-redirect" data-redirect="theory-1">Mulai Belajar</button>
+                        </div>
+                        
+                        <div class="dashboard-card main-topic-card card-glow-purple">
+                            <div class="card-icon"><i data-lucide="cpu"></i></div>
+                            <h3>Nilai & Vektor Eigen, Diagonalisasi</h3>
+                            <p>Pelajari cara mencari nilai eigen dan vektor eigen, menentukan apakah matriks dapat didiagonalkan, serta menghitung perpangkatan matriks besar dengan efisien.</p>
+                            <button class="btn btn-secondary btn-sm btn-nav-redirect" data-redirect="soal-c">Lihat Latihan Soal</button>
+                        </div>
+                    </div>
+                    
+                    <div class="features-section">
+                        <h3>Mengapa Belajar di Sini?</h3>
+                        <div class="features-grid">
+                            <div class="feature-item">
+                                <div class="feature-icon"><i data-lucide="view"></i></div>
+                                <h4>Visualisasi 3D Interaktif</h4>
+                                <p>Rotasikan, perbesar, dan geser objek geometri (garis, bidang, titik tembus) di ruang 3 dimensi untuk pemahaman intuitif.</p>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon"><i data-lucide="file-text"></i></div>
+                                <h4>Pembahasan Terstruktur</h4>
+                                <p>Setiap soal dipecah menjadi Rumus, Diketahui & Ditanya, serta Langkah Jawab yang detail dan sistematis.</p>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon"><i data-lucide="zap"></i></div>
+                                <h4>Kalkulator Otomatis</h4>
+                                <p>Gunakan kalkulator matriks dan geometri untuk memecahkan soal buatanmu sendiri secara instan.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- SECTION: THEORY 1 (Dasar Vektor) -->
+                <section id="sec-theory-1" class="content-section">
+                    <div class="theory-wrapper" id="theory-1-content">
+                        <!-- Filled by JS -->
+                    </div>
+                </section>
+                
+                <!-- SECTION: THEORY 2 (Garis 3D) -->
+                <section id="sec-theory-2" class="content-section">
+                    <div class="theory-wrapper" id="theory-2-content">
+                        <!-- Filled by JS -->
+                    </div>
+                </section>
+                
+                <!-- SECTION: THEORY 3 (Bidang 3D) -->
+                <section id="sec-theory-3" class="content-section">
+                    <div class="theory-wrapper" id="theory-3-content">
+                        <!-- Filled by JS -->
+                    </div>
+                </section>
+                
+                <!-- SECTION: THEORY RELATIONS (Hubungan Geometris) -->
+                <section id="sec-theory-relations" class="content-section">
+                    <div class="theory-wrapper" id="theory-relations-content">
+                        <!-- Filled by JS -->
+                    </div>
+                </section>
+                
+                <!-- SECTION: SOAL TOPIC A (Garis & Bidang) -->
+                <section id="sec-soal-a" class="content-section">
+                    <div class="soal-layout">
+                        <div class="soal-list-sidebar" id="soal-a-list">
+                            <!-- Filled by JS (Soal 0 - Soal 8 buttons) -->
+                        </div>
+                        <div class="soal-viewer-card card-glow-indigo">
+                            <div class="soal-viewer-header">
+                                <h3 id="soal-a-title">Soal 0</h3>
+                                <div class="tabs" id="soal-a-tabs">
+                                    <button class="tab-btn active" data-tab="pertanyaan">Soal</button>
+                                    <button class="tab-btn" data-tab="konsep">Rumus</button>
+                                    <button class="tab-btn" data-tab="diketahui">Diketahui & Ditanya</button>
+                                    <button class="tab-btn" data-tab="jawaban">Langkah Jawab</button>
+                                </div>
+                            </div>
+                            <div class="soal-viewer-body" id="soal-a-body">
+                                <div class="tab-content active" id="soal-a-tab-pertanyaan"></div>
+                                <div class="tab-content" id="soal-a-tab-konsep"></div>
+                                <div class="tab-content" id="soal-a-tab-diketahui"></div>
+                                <div class="tab-content" id="soal-a-tab-jawaban"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- SECTION: SOAL TOPIC C (Eigen & Diagonalisasi) -->
+                <section id="sec-soal-c" class="content-section">
+                    <div class="soal-layout">
+                        <div class="soal-list-sidebar" id="soal-c-list">
+                            <!-- Filled by JS (Soal C0 - Soal C8 buttons) -->
+                        </div>
+                        <div class="soal-viewer-card card-glow-purple">
+                            <div class="soal-viewer-header">
+                                <h3 id="soal-c-title">Soal C0</h3>
+                                <div class="tabs" id="soal-c-tabs">
+                                    <button class="tab-btn active" data-tab="pertanyaan">Soal</button>
+                                    <button class="tab-btn" data-tab="konsep">Rumus</button>
+                                    <button class="tab-btn" data-tab="diketahui">Diketahui & Ditanya</button>
+                                    <button class="tab-btn" data-tab="jawaban">Langkah Jawab</button>
+                                </div>
+                            </div>
+                            <div class="soal-viewer-body" id="soal-c-body">
+                                <div class="tab-content active" id="soal-c-tab-pertanyaan"></div>
+                                <div class="tab-content" id="soal-c-tab-konsep"></div>
+                                <div class="tab-content" id="soal-c-tab-diketahui"></div>
+                                <div class="tab-content" id="soal-c-tab-jawaban"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- SECTION: KALKULATOR 3D (Garis & Bidang) -->
+                <section id="sec-calc-3d" class="content-section">
+                    <div class="calculator-layout-3d">
+                        <div class="calc-sidebar card-glow-indigo">
+                            <h3>Pilih Operasi</h3>
+                            <select id="calc-3d-operation" class="form-select">
+                                <option value="plane-point-normal">Bidang: Titik & Vektor Normal</option>
+                                <option value="plane-three-points">Bidang: Melalui 3 Titik</option>
+                                <option value="line-point-direction">Garis: Titik & Vektor Arah</option>
+                                <option value="line-two-points">Garis: Melalui 2 Titik</option>
+                                <option value="line-plane-intersection">Titik Tembus Garis & Bidang</option>
+                                <option value="two-planes-relation">Hubungan 2 Bidang</option>
+                            </select>
+                            
+                            <hr class="divider">
+                            
+                            <!-- Dynamic inputs container -->
+                            <div id="calc-3d-inputs" class="inputs-container">
+                                <!-- Filled by JS based on selection -->
+                            </div>
+                            
+                            <button id="btn-calculate-3d" class="btn btn-primary w-100 mt-4">
+                                <i data-lucide="play"></i> Hitung & Visualisasikan
+                            </button>
+                        </div>
+                        
+                        <div class="calc-results-visualizer">
+                            <div class="visualizer-container-wrapper card-glow-indigo">
+                                <div class="visualizer-header">
+                                    <h4><i data-lucide="eye"></i> Visualisasi 3D Interaktif</h4>
+                                    <span class="control-tip">Klik & seret untuk memutar. Scroll untuk zoom.</span>
+                                </div>
+                                <div id="canvas-3d-container" class="canvas-container">
+                                    <!-- 3D Canvas will be appended here -->
+                                    <div class="canvas-fallback" id="visualizer-fallback">
+                                        <i data-lucide="box" class="large-icon"></i>
+                                        <p>Menyiapkan engine 3D... Masukkan input dan klik "Hitung" untuk memicu.</p>
+                                    </div>
+                                </div>
+                                <div class="visualizer-controls">
+                                    <button class="btn btn-xs btn-outline" id="btn-reset-view">Reset Sudut Pandang</button>
+                                </div>
+                            </div>
+                            
+                            <div class="calc-output-card card-glow-indigo mt-4">
+                                <h4><i data-lucide="file-output"></i> Hasil Perhitungan & Langkah Jawab</h4>
+                                <div id="calc-3d-output" class="math-output">
+                                    <p class="placeholder-text">Masukkan input dan tekan Hitung untuk memunculkan langkah-langkah analitis di sini.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- SECTION: KALKULATOR EIGEN (Matrix Solver) -->
+                <section id="sec-calc-eigen" class="content-section">
+                    <div class="calc-eigen-container">
+                        <div class="matrix-input-card card-glow-purple">
+                            <h3>Kalkulator Nilai & Vektor Eigen</h3>
+                            <p>Masukkan elemen matriks persegi untuk mencari persamaan karakteristik, nilai-nilai eigen, vektor eigen, dan matriks diagonalisasinya secara otomatis.</p>
+                            
+                            <div class="matrix-config mt-3">
+                                <label for="matrix-size" class="form-label">Ukuran Matriks:</label>
+                                <select id="matrix-size" class="form-select inline-select">
+                                    <option value="2">2 x 2</option>
+                                    <option value="3">3 x 3</option>
+                                </select>
+                            </div>
+                            
+                            <div class="matrix-grid-container mt-4">
+                                <div id="matrix-input-grid" class="matrix-grid-2x2">
+                                    <!-- Inputs generated by JS -->
+                                </div>
+                            </div>
+                            
+                            <button id="btn-calculate-eigen" class="btn btn-secondary w-100 mt-4">
+                                <i data-lucide="play"></i> Hitung Eigen & Diagonalisasi
+                            </button>
+                        </div>
+                        
+                        <div class="eigen-output-card card-glow-purple">
+                            <h4><i data-lucide="file-output"></i> Hasil & Analisis Langkah demi Langkah</h4>
+                            <div id="calc-eigen-output" class="math-output">
+                                <p class="placeholder-text">Masukkan elemen matriks dan klik "Hitung" untuk memicu perhitungan analitis.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+            </div>
+        </main>
+    </div>
+
+    <!-- KaTeX JS and CDNs -->
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+    
+    <!-- Three.js and OrbitControls CDN for 3D graphics -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    
+    <!-- Lucide Icons CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.294.0/dist/umd/lucide.min.js"></script>
+
+    <!-- App JavaScript files -->
+    <script src="js/theory.js"></script>
+    <script src="js/solutions.js"></script>
+    <script src="js/calculators.js"></script>
+    <script src="js/visualizer.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
