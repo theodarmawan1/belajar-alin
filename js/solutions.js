@@ -977,5 +977,508 @@ const solutionsData = {
                 </div>
             `
         }
+    },
+    "soal-b": {
+        "soal-b-0": {
+            id: "soal-b-0",
+            title: "Soal B0 (Ruang Vektor)",
+            pertanyaan: `
+                <p class="lead">Wah, kamu punya lembar latihan Aljabar Linear baru nih dari tugas kuliahmu. Yuk, kita bedah dan selesaikan satu per satu dengan santai tapi terstruktur!</p>
+                <div class="solve-step">
+                    <h5>Analisis Vektor pada Grafik</h5>
+                    <p>Mari kita baca titik koordinat dari grafik kartesius terlebih dahulu. Anggap pusat koordinat berada di $O(0,0)$ di mana sumbu berpotongan (tebal). Setiap kotak bernilai 1 satuan.</p>
+                    <ul>
+                        <li><strong>a.</strong> Tentukan Initial Point (Titik Pangkal) dan Terminal Point (Titik Ujung) dari vektor $\\mathbf{u}$, $\\mathbf{v}$, dan $\\mathbf{w}$.</li>
+                        <li><strong>b.</strong> Hitung Norm (Panjang Vektor) dari masing-masing vektor $\\mathbf{u}$, $\\mathbf{v}$, dan $\\mathbf{w}$.</li>
+                        <li><strong>c.</strong> Tuliskan komponen vektornya dan hitung hasil penjumlahan vektor $\\mathbf{u} + \\mathbf{v} + \\mathbf{w}$.</li>
+                    </ul>
+                </div>
+            `,
+            konsep: `
+                <div class="solve-step">
+                    <h5>1. Mencari Komponen Vektor dari Dua Titik</h5>
+                    <p>Jika vektor dimulai dari titik pangkal $A(x_1, y_1)$ ke titik ujung $B(x_2, y_2)$, komponen vektornya adalah:</p>
+                    \\[ \\vec{v} = [x_2 - x_1, \\ y_2 - y_1] = [\\Delta x, \\ \\Delta y] \\]
+                </div>
+                <div class="solve-step">
+                    <h5>2. Menghitung Norm (Panjang Vektor)</h5>
+                    <p>Norm dari vektor $\\vec{v} = [\\Delta x, \\Delta y]$ dirumuskan sebagai:</p>
+                    \\[ \\|\\vec{v}\\| = \\sqrt{\\Delta x^2 + \\Delta y^2} \\]
+                </div>
+                <div class="solve-step">
+                    <h5>3. Penjumlahan Vektor</h5>
+                    <p>Dilakukan dengan menjumlahkan masing-masing komponen yang seletak:</p>
+                    \\[ \\vec{a} + \\vec{b} = [a_x + b_x, \\ a_y + b_y] \\]
+                </div>
+            `,
+            diketahui: `
+                <div class="solve-step">
+                    <h5>Titik-titik Koordinat dari Pembacaan Grafik:</h5>
+                    <ul>
+                        <li><strong>Vektor $\\mathbf{u}$:</strong> Pangkal $(1, 2)$, Ujung $(4, -1)$</li>
+                        <li><strong>Vektor $\\mathbf{v}$:</strong> Pangkal $(1, 2)$, Ujung $(-4, -3)$</li>
+                        <li><strong>Vektor $\\mathbf{w}$:</strong> Pangkal $(-4, -3)$, Ujung $(1, 5)$</li>
+                    </ul>
+                </div>
+            `,
+            jawaban: `
+                <div class="solve-step">
+                    <h5>a. Menentukan Initial dan Terminal Point</h5>
+                    <ul>
+                        <li><strong>Vektor $\\mathbf{u}$:</strong> Initial Point $(1, 2)$, Terminal Point $(4, -1)$</li>
+                        <li><strong>Vektor $\\mathbf{v}$:</strong> Initial Point $(1, 2)$, Terminal Point $(-4, -3)$</li>
+                        <li><strong>Vektor $\\mathbf{w}$:</strong> Initial Point $(-4, -3)$, Terminal Point $(1, 5)$</li>
+                    </ul>
+                </div>
+
+                <div class="solve-step">
+                    <h5>b. Menghitung Norm (Panjang Vektor)</h5>
+                    <p>Kita cari dulu komponen $\\Delta x$ dan $\\Delta y$ untuk tiap vektor:</p>
+                    
+                    <p><strong>Vektor $\\mathbf{u}$:</strong> komponennya adalah $[4-1, \\ -1-2] = [3, -3]$</p>
+                    \\[ \\|\\mathbf{u}\\| = \\sqrt{3^2 + (-3)^2} = \\sqrt{9 + 9} = \\sqrt{18} = 3\\sqrt{2} \\approx 4.243 \\]
+                    
+                    <p><strong>Vektor $\\mathbf{v}$:</strong> komponennya adalah $[-4-1, \\ -3-2] = [-5, -5]$</p>
+                    \\[ \\|\\mathbf{v}\\| = \\sqrt{(-5)^2 + (-5)^2} = \\sqrt{25 + 25} = \\sqrt{50} = 5\\sqrt{2} \\approx 7.071 \\]
+                    
+                    <p><strong>Vektor $\\mathbf{w}$:</strong> komponennya adalah $[1-(-4), \\ 5-(-3)] = [5, 8]$</p>
+                    \\[ \\|\\mathbf{w}\\| = \\sqrt{5^2 + 8^2} = \\sqrt{25 + 64} = \\sqrt{89} \\approx 9.434 \\]
+                </div>
+
+                <div class="solve-step">
+                    <h5>c. Komponen Vektor dan Penjumlahannya</h5>
+                    <p>Dari perhitungan sebelumnya, komponen-komponen vektor adalah:</p>
+                    \\[ \\mathbf{u} = [3, -3] \\]
+                    \\[ \\mathbf{v} = [-5, -5] \\]
+                    \\[ \\mathbf{w} = [5, 8] \\]
+                    
+                    <p>Lakukan penjumlahan vektor $\\mathbf{u} + \\mathbf{v} + \\mathbf{w}$:</p>
+                    \\[ \\mathbf{u} + \\mathbf{v} + \\mathbf{w} = [3 + (-5) + 5, \\ -3 + (-5) + 8] \\]
+                    \\[ \\mathbf{u} + \\mathbf{v} + \\mathbf{w} = [3, \\ 0] \\]
+                    <p><strong>Hasil penjumlahan vektor adalah:</strong> $[3, 0]$.</p>
+                </div>
+            `
+        },
+        "soal-b-1": {
+            id: "soal-b-1",
+            title: "Soal B1 (Ruang Vektor)",
+            pertanyaan: `
+                <div class="solve-step">
+                    <h5>Bagian 1:</h5>
+                    <p>Tunjukkan bahwa vektor-vektor $\\mathbf{v}_1 = (1, 0, 2)$, $\\mathbf{v}_2 = (3, 1, 1)$, dan $\\mathbf{v}_3 = (2, -1, 3)$ adalah Bebas Linear.</p>
+                </div>
+                <div class="solve-step">
+                    <h5>Bagian 2:</h5>
+                    <p>Nyatakan vektor $\\mathbf{w} = (13, 2, 10)$ sebagai Kombinasi Linear dari $\\mathbf{v}_1$, $\\mathbf{v}_2$, dan $\\mathbf{v}_3$.</p>
+                </div>
+            `,
+            konsep: `
+                <div class="solve-step">
+                    <h5>1. Pembuktian Bebas Linear</h5>
+                    <p>Sejumlah $n$ buah vektor di $\\mathbb{R}^n$ dikatakan bebas linear jika matriks $M$ yang dibentuk oleh vektor-vektor tersebut sebagai kolom memiliki determinan tidak sama dengan nol:</p>
+                    \\[ \\det(M) \\neq 0 \\]
+                </div>
+                <div class="solve-step">
+                    <h5>2. Kombinasi Linear</h5>
+                    <p>Vektor $\\mathbf{w}$ merupakan kombinasi linear dari $\\mathbf{v}_1, \\mathbf{v}_2, \\mathbf{v}_3$ jika terdapat skalar $k_1, k_2, k_3$ sedemikian rupa sehingga:</p>
+                    \\[ \\mathbf{w} = k_1\\mathbf{v}_1 + k_2\\mathbf{v}_2 + k_3\\mathbf{v}_3 \\]
+                    <p>Hal ini diselesaikan dengan sistem persamaan linear (SPL).</p>
+                </div>
+            `,
+            diketahui: `
+                <p><strong>Diketahui:</strong></p>
+                <ul>
+                    <li>$\\mathbf{v}_1 = (1, 0, 2)$</li>
+                    <li>$\\mathbf{v}_2 = (3, 1, 1)$</li>
+                    <li>$\\mathbf{v}_3 = (2, -1, 3)$</li>
+                    <li>$\\mathbf{w} = (13, 2, 10)$</li>
+                </ul>
+            `,
+            jawaban: `
+                <div class="solve-step">
+                    <h5>Jawaban Bagian 1: Tunjukkan Bebas Linear</h5>
+                    <p>Susun vektor-vektor tersebut sebagai kolom dalam matriks $M$:</p>
+                    \\[ M = \\begin{bmatrix} 1 & 3 & 2 \\\\ 0 & 1 & -1 \\\\ 2 & 1 & 3 \\end{bmatrix} \\]
+                    <p>Hitung determinan matriks $M$ dengan metode Sarrus:</p>
+                    \\[ \\det(M) = [1\\cdot1\\cdot3 + 3\\cdot(-1)\\cdot2 + 2\\cdot0\\cdot1] - [2\\cdot1\\cdot2 + 1\\cdot(-1)\\cdot1 + 3\\cdot0\\cdot3] \\]
+                    \\[ \\det(M) = [3 - 6 + 0] - [4 - 1 + 0] \\]
+                    \\[ \\det(M) = [-3] - [3] = -6 \\]
+                    <p>Karena $\\det(M) = -6 \\neq 0$, maka kolom-kolom matriks $M$ saling bebas linear. Jadi, <strong>vektor-vektor $\\mathbf{v}_1, \\mathbf{v}_2, \\mathbf{v}_3$ terbukti Bebas Linear</strong>.</p>
+                </div>
+
+                <div class="solve-step">
+                    <h5>Jawaban Bagian 2: Nyatakan sebagai Kombinasi Linear</h5>
+                    <p>Persamaan kombinasi linear:</p>
+                    \\[ \\mathbf{w} = k_1\\mathbf{v}_1 + k_2\\mathbf{v}_2 + k_3\\mathbf{v}_3 \\]
+                    \\[ (13, 2, 10) = k_1(1, 0, 2) + k_2(3, 1, 1) + k_3(2, -1, 3) \\]
+                    <p>Dari komponen-komponennya, kita dapatkan sistem persamaan linear (SPL):</p>
+                    \\[ \\text{(1) } k_1 + 3k_2 + 2k_3 = 13 \\]
+                    \\[ \\text{(2) } k_2 - k_3 = 2 \\implies k_2 = k_3 + 2 \\]
+                    \\[ \\text{(3) } 2k_1 + k_2 + 3k_3 = 10 \\]
+                    
+                    <p>Substitusikan persamaan (2) ke persamaan (1) dan (3):</p>
+                    <p>Dari persamaan (1):</p>
+                    \\[ k_1 + 3(k_3 + 2) + 2k_3 = 13 \\implies k_1 + 5k_3 + 6 = 13 \\implies k_1 = 7 - 5k_3 \\]
+                    <p>Masukkan ke persamaan (3):</p>
+                    \\[ 2(7 - 5k_3) + (k_3 + 2) + 3k_3 = 10 \\]
+                    \\[ 14 - 10k_3 + k_3 + 2 + 3k_3 = 10 \\]
+                    \\[ 16 - 6k_3 = 10 \\implies 6k_3 = 6 \\implies k_3 = 1 \\]
+                    
+                    <p>Cari nilai konstanta lainnya:</p>
+                    \\[ k_2 = 1 + 2 = 3 \\]
+                    \\[ k_1 = 7 - 5(1) = 2 \\]
+                    
+                    <p><strong>Bentuk kombinasi linearnya adalah:</strong></p>
+                    \\[ \\mathbf{w} = 2\\mathbf{v}_1 + 3\\mathbf{v}_2 + \\mathbf{v}_3 \\]
+                </div>
+            `
+        },
+        "soal-b-2": {
+            id: "soal-b-2",
+            title: "Soal B2 (Ruang Vektor)",
+            pertanyaan: `
+                <p>Diketahui dua buah vektor $\\vec{a} = (3, 2, 2)$ dan $\\vec{b} = (1, 2, -2)$.</p>
+                <ol>
+                    <li>Cari sebuah vektor $\\vec{c}$ yang tegak lurus terhadap hasil penjumlahan $(\\vec{a} + \\vec{b})$ dan hasil pengurangan $(\\vec{a} - \\vec{b})$.</li>
+                    <li>Tentukan Unit Vektor (vektor satuan) dari $\\vec{c}$.</li>
+                </ol>
+            `,
+            konsep: `
+                <div class="solve-step">
+                    <h5>1. Vektor Tegak Lurus (Cross Product)</h5>
+                    <p>Vektor yang tegak lurus terhadap dua vektor $\\vec{u}$ dan $\\vec{v}$ diperoleh dari perkalian silang (cross product) mereka:</p>
+                    \\[ \\vec{c} = \\vec{u} \\times \\vec{v} \\]
+                </div>
+                <div class="solve-step">
+                    <h5>2. Vektor Satuan (Unit Vector)</h5>
+                    <p>Vektor satuan $\\hat{u}$ searah vektor $\\vec{c}$ diperoleh dengan membagi vektor dengan panjangnya:</p>
+                    \\[ \\hat{u} = \\frac{\\vec{c}}{\\|\\vec{c}\\|} \\]
+                </div>
+            `,
+            diketahui: `
+                <p><strong>Diketahui:</strong></p>
+                <ul>
+                    <li>$\\vec{a} = (3, 2, 2)$</li>
+                    <li>$\\vec{b} = (1, 2, -2)$</li>
+                </ul>
+            `,
+            jawaban: `
+                <div class="solve-step">
+                    <h5>Langkah 1: Tentukan hasil Penjumlahan dan Pengurangan Vektor</h5>
+                    \\[ \\vec{u} = \\vec{a} + \\vec{b} = [3+1, \\ 2+2, \\ 2+(-2)] = [4, 4, 0] \\]
+                    \\[ \\vec{v} = \\vec{a} - \\vec{b} = [3-1, \\ 2-2, \\ 2-(-2)] = [2, 0, 4] \\]
+                </div>
+
+                <div class="solve-step">
+                    <h5>Langkah 2: Cari Vektor $\\vec{c}$ dengan Cross Product</h5>
+                    \\[ \\vec{c} = \\vec{u} \\times \\vec{v} = \\det \\begin{bmatrix} \\vec{i} & \\vec{j} & \\vec{k} \\\\ 4 & 4 & 0 \\\\ 2 & 0 & 4 \\end{bmatrix} \\]
+                    \\[ \\vec{c} = \\vec{i}(4\\cdot4 - 0\\cdot0) - \\vec{j}(4\\cdot4 - 0\\cdot2) + \\vec{k}(4\\cdot0 - 4\\cdot2) \\]
+                    \\[ \\vec{c} = 16\\vec{i} - 16\\vec{j} - 8\\vec{k} = [16, -16, -8] \\]
+                    <p><strong>Vektor yang tegak lurus adalah:</strong> $[16, -16, -8]$ (atau kelipatannya).</p>
+                </div>
+
+                <div class="solve-step">
+                    <h5>Langkah 3: Hitung Vektor Satuan dari $\\vec{c}$</h5>
+                    <p>Hitung panjang (norm) dari $\\vec{c}$:</p>
+                    \\[ \\|\\vec{c}\\| = \\sqrt{16^2 + (-16)^2 + (-8)^2} = \\sqrt{256 + 256 + 64} = \\sqrt{576} = 24 \\]
+                    <p>Vektor satuan $\\hat{u}$:</p>
+                    \\[ \\hat{u} = \\frac{\\vec{c}}{\\|\\vec{c}\\|} = \\left( \\frac{16}{24}, \\ \\frac{-16}{24}, \\ \\frac{-8}{24} \\right) = \\left( \\frac{2}{3}, \\ -\\frac{2}{3}, \\ -\\frac{1}{3} \\right) \\]
+                    <p><strong>Vektor satuan yang dicari adalah:</strong> $\\left( \\frac{2}{3}, \\ -\\frac{2}{3}, \\ -\\frac{1}{3} \\right)$.</p>
+                </div>
+            `
+        },
+        "soal-b-3": {
+            id: "soal-b-3",
+            title: "Soal B3 (Ruang Vektor)",
+            pertanyaan: `
+                <p>Apakah himpunan vektor $S = \\{(1,1,1,1), (2,-2,0,0), (0,3,0,0), (0,0,2,1)\\}$ Bebas Linear di $\\mathbb{R}^4$?</p>
+            `,
+            konsep: `
+                <p>Susun vektor-vektor tersebut menjadi baris/kolom matriks persegi $4 \\times 4$. Himpunan tersebut bebas linear jika determinan matriksnya tidak sama dengan nol:</p>
+                \\[ \\det(M) \\neq 0 \\]
+            `,
+            diketahui: `
+                <p><strong>Diketahui:</strong> Himpunan 4 buah vektor di $\\mathbb{R}^4$</p>
+            `,
+            jawaban: `
+                <div class="solve-step">
+                    <h5>Langkah 1: Susun ke dalam Matriks</h5>
+                    \\[ M = \\begin{bmatrix} 1 & 1 & 1 & 1 \\\\ 2 & -2 & 0 & 0 \\\\ 0 & 3 & 0 & 0 \\\\ 0 & 0 & 2 & 1 \\end{bmatrix} \\]
+                </div>
+
+                <div class="solve-step">
+                    <h5>Langkah 2: Hitung Determinan Matriks $4 \\times 4$</h5>
+                    <p>Kita gunakan ekspansi kofaktor sepanjang baris ke-3 (karena memiliki elemen nol terbanyak):</p>
+                    \\[ \\det(M) = -3 \\cdot \\det \\begin{bmatrix} 1 & 1 & 1 \\\\ 2 & 0 & 0 \\\\ 0 & 2 & 1 \\end{bmatrix} \\]
+                    <p>Sekarang, hitung determinan submatriks $3 \\times 3$ menggunakan ekspansi baris kedua:</p>
+                    \\[ \\det \\begin{bmatrix} 1 & 1 & 1 \\\\ 2 & 0 & 0 \\\\ 0 & 2 & 1 \\end{bmatrix} = -2 \\cdot \\det \\begin{bmatrix} 1 & 1 \\\\ 2 & 1 \\end{bmatrix} = -2 \\cdot (1\\cdot1 - 1\\cdot2) = -2 \\cdot (-1) = 2 \\]
+                    
+                    <p>Substitusikan kembali untuk mencari determinan utama:</p>
+                    \\[ \\det(M) = -3 \\cdot (2) = -6 \\]
+                </div>
+
+                <div class="solve-step">
+                    <h5>Langkah 3: Kesimpulan</h5>
+                    <p>Karena nilai determinan $\\det(M) = -6 \\neq 0$, maka <strong>himpunan vektor $S$ terbukti Bebas Linear</strong>.</p>
+                </div>
+            `
+        },
+        "soal-b-4": {
+            id: "soal-b-4",
+            title: "Soal B4 (Ruang Vektor)",
+            pertanyaan: `
+                <p>Diketahui tiga buah vektor $\\mathbf{v}_1 = (1,0,1)$, $\\mathbf{v}_2 = (1,1,0)$, dan $\\mathbf{v}_3 = (0,1,1)$.</p>
+                <ol>
+                    <li>Apakah himpunan vektor tersebut bebas linear atau bergantung linear?</li>
+                    <li>Nyatakan vektor $\\mathbf{w} = (1,2,3)$ sebagai kombinasi linear dari $\\mathbf{v}_1$, $\\mathbf{v}_2$, dan $\\mathbf{v}_3$.</li>
+                </ol>
+            `,
+            konsep: `
+                <p>Menggunakan konsep determinan untuk mendeteksi kebaslinieran, dan menggunakan penyelesaian SPL untuk mencari skalar kombinasi linear.</p>
+            `,
+            diketahui: `
+                <p><strong>Diketahui:</strong></p>
+                <ul>
+                    <li>$\\mathbf{v}_1 = (1,0,1)$</li>
+                    <li>$\\mathbf{v}_2 = (1,1,0)$</li>
+                    <li>$\\mathbf{v}_3 = (0,1,1)$</li>
+                    <li>$\\mathbf{w} = (1,2,3)$</li>
+                </ul>
+            `,
+            jawaban: `
+                <div class="solve-step">
+                    <h5>Jawaban Bagian 1: Kebebasan Linear</h5>
+                    <p>Susun matriks $M$ dari kolom vektor:</p>
+                    \\[ M = \\begin{bmatrix} 1 & 1 & 0 \\\\ 0 & 1 & 1 \\\\ 1 & 0 & 1 \\end{bmatrix} \\]
+                    <p>Hitung determinannya dengan metode Sarrus:</p>
+                    \\[ \\det(M) = [1\\cdot1\\cdot1 + 1\\cdot1\\cdot1 + 0] - [0 + 0 + 0] = 2 \\]
+                    <p>Karena $\\det(M) = 2 \\neq 0$, maka <strong>vektor-vektor tersebut Bebas Linear</strong>.</p>
+                </div>
+
+                <div class="solve-step">
+                    <h5>Jawaban Bagian 2: Kombinasi Linear</h5>
+                    <p>Pecahkan persamaan $\\mathbf{w} = k_1\\mathbf{v}_1 + k_2\\mathbf{v}_2 + k_3\\mathbf{v}_3$:</p>
+                    \\[ (1, 2, 3) = k_1(1, 0, 1) + k_2(1, 1, 0) + k_3(0, 1, 1) \\]
+                    <p>Diperoleh SPL:</p>
+                    \\[ \\text{(1) } k_1 + k_2 = 1 \\]
+                    \\[ \\text{(2) } k_2 + k_3 = 2 \\]
+                    \\[ \\text{(3) } k_1 + k_3 = 3 \\]
+                    
+                    <p>Jika kita jumlahkan ketiga persamaan tersebut:</p>
+                    \\[ (k_1 + k_2) + (k_2 + k_3) + (k_1 + k_3) = 1 + 2 + 3 \\]
+                    \\[ 2(k_1 + k_2 + k_3) = 6 \\implies k_1 + k_2 + k_3 = 3 \\]
+                    
+                    <p>Substitusikan persamaan (2) ke dalam persamaan penjumlahan:</p>
+                    \\[ k_1 + (k_2 + k_3) = 3 \\implies k_1 + 2 = 3 \\implies k_1 = 1 \\]
+                    <p>Substitusikan persamaan (3) ke dalam persamaan penjumlahan:</p>
+                    \\[ (k_1 + k_3) + k_2 = 3 \\implies 3 + k_2 = 3 \\implies k_2 = 0 \\]
+                    <p>Dari persamaan (1) atau (2):</p>
+                    \\[ 0 + k_3 = 2 \\implies k_3 = 2 \\]
+                    
+                    <p><strong>Bentuk kombinasi linear akhirnya adalah:</strong></p>
+                    \\[ \\mathbf{w} = \\mathbf{v}_1 + 2\\mathbf{v}_3 \\]
+                </div>
+            `
+        },
+        "soal-b-5": {
+            id: "soal-b-5",
+            title: "Soal B5 (Ruang Vektor)",
+            pertanyaan: `
+                <p>Nyatakan matriks $P = \\begin{bmatrix} 3 & 1 \\\\ 1 & -1 \\end{bmatrix}$ sebagai kombinasi linear dari matriks-matriks berikut:</p>
+                \\[ A = \\begin{bmatrix} 1 & 1 \\\\ 1 & 0 \\end{bmatrix}, \\quad B = \\begin{bmatrix} 0 & 0 \\\\ 1 & 1 \\end{bmatrix}, \\quad C = \\begin{bmatrix} 0 & 2 \\\\ 0 & -1 \\end{bmatrix} \\]
+            `,
+            konsep: `
+                <p>Konsep kombinasi linear berlaku sama pada ruang matriks $M_{22}$. Kita cari skalar $k_1, k_2, k_3$ yang memenuhi:</p>
+                \\[ P = k_1A + k_2B + k_3C \\]
+            `,
+            diketahui: `
+                <p><strong>Diketahui:</strong> Matriks $P, A, B, C$ berukuran $2 \\times 2$.</p>
+            `,
+            jawaban: `
+                <div class="solve-step">
+                    <h5>Langkah 1: Susun Persamaan Elemen Matriks</h5>
+                    \\[ \\begin{bmatrix} 3 & 1 \\\\ 1 & -1 \\end{bmatrix} = k_1\\begin{bmatrix} 1 & 1 \\\\ 1 & 0 \\end{bmatrix} + k_2\\begin{bmatrix} 0 & 0 \\\\ 1 & 1 \\end{bmatrix} + k_3\\begin{bmatrix} 0 & 2 \\\\ 0 & -1 \\end{bmatrix} \\]
+                    \\[ \\begin{bmatrix} 3 & 1 \\\\ 1 & -1 \\end{bmatrix} = \\begin{bmatrix} k_1 & k_1 + 2k_3 \\\\ k_1 + k_2 & k_2 - k_3 \\end{bmatrix} \\]
+                </div>
+
+                <div class="solve-step">
+                    <h5>Langkah 2: Selesaikan Sistem Persamaan</h5>
+                    <p>Dari elemen Baris 1 Kolom 1:</p>
+                    \\[ k_1 = 3 \\]
+                    <p>Dari elemen Baris 2 Kolom 1:</p>
+                    \\[ k_1 + k_2 = 1 \\implies 3 + k_2 = 1 \\implies k_2 = -2 \\]
+                    <p>Dari elemen Baris 1 Kolom 2:</p>
+                    \\[ k_1 + 2k_3 = 1 \\implies 3 + 2k_3 = 1 \\implies 2k_3 = -2 \\implies k_3 = -1 \\]
+                </div>
+
+                <div class="solve-step">
+                    <h5>Langkah 3: Verifikasi Konsistensi pada Elemen Terakhir</h5>
+                    <p>Kita uji nilai konstanta pada Baris 2 Kolom 2:</p>
+                    \\[ k_2 - k_3 = -2 - (-1) = -1 \\]
+                    <p>Karena hasilnya cocok dengan entri matriks $P$ (yaitu $-1$), sistem persamaan terbukti konsisten.</p>
+                    <p><strong>Matriks P sebagai kombinasi linear dari A, B, C adalah:</strong></p>
+                    \\[ P = 3A - 2B - C \\]
+                </div>
+            `
+        },
+        "soal-b-6": {
+            id: "soal-b-6",
+            title: "Soal B6 (Ruang Vektor)",
+            pertanyaan: `
+                <p>Tentukan apakah himpunan polinomial kuadrat $S = \\{1 + x - 2x^2, \\ 2 + 5x - x^2, \\ x + x^2\\}$ Bebas Linear atau Bergantung Linear.</p>
+            `,
+            konsep: `
+                <div class="solve-step">
+                    <h5>Isomorfisme Ruang Polinomial $P_2$ ke $\\mathbb{R}^3$:</h5>
+                    <p>Polinomial kuadrat $a_0 + a_1 x + a_2 x^2$ dapat direpresentasikan sebagai vektor komponen $(a_0, a_1, a_2)$ dalam basis standar $\\{1, x, x^2\\}$.</p>
+                    <p>Kita dapat menyusun matriks komponen dan menguji nilai determinannya:</p>
+                    \\[ \\det(M) = 0 \\implies \\text{Bergantung Linear (Dependent)} \\]
+                    \\[ \\det(M) \\neq 0 \\implies \\text{Bebas Linear (Independent)} \\]
+                </div>
+            `,
+            diketahui: `
+                <p><strong>Diketahui:</strong></p>
+                <ul>
+                    <li>$p_1(x) = 1 + x - 2x^2 \\implies \\mathbf{v}_1 = (1, 1, -2)$</li>
+                    <li>$p_2(x) = 2 + 5x - x^2 \\implies \\mathbf{v}_2 = (2, 5, -1)$</li>
+                    <li>$p_3(x) = x + x^2 = 0 + 1x + 1x^2 \\implies \\mathbf{v}_3 = (0, 1, 1)$</li>
+                </ul>
+            `,
+            jawaban: `
+                <div class="solve-step">
+                    <h5>Langkah 1: Susun Matriks Komponen</h5>
+                    \\[ M = \\begin{bmatrix} 1 & 2 & 0 \\\\ 1 & 5 & 1 \\\\ -2 & -1 & 1 \\end{bmatrix} \\]
+                </div>
+
+                <div class="solve-step">
+                    <h5>Langkah 2: Hitung Determinan Matriks</h5>
+                    <p>Menggunakan metode Sarrus:</p>
+                    \\[ \\det(M) = [1\\cdot5\\cdot1 + 2\\cdot1\\cdot(-2) + 0\\cdot1\\cdot(-1)] - [0\\cdot5\\cdot(-2) + 1\\cdot1\\cdot(-1) + 2\\cdot1\\cdot1] \\]
+                    \\[ \\det(M) = [5 - 4 + 0] - [0 - 1 + 2] \\]
+                    \\[ \\det(M) = 1 - 1 = 0 \\]
+                </div>
+
+                <div class="solve-step">
+                    <h5>Langkah 3: Kesimpulan</h5>
+                    <p>Karena nilai determinan matriks koordinatnya sama dengan <strong>nol</strong>, maka himpunan polinomial $S$ bersifat <strong>Bergantung Linear (Linearly Dependent)</strong>.</p>
+                </div>
+            `
+        },
+        "soal-b-7": {
+            id: "soal-b-7",
+            title: "Soal B7 (Ruang Vektor)",
+            pertanyaan: `
+                <p>Diketahui dua vektor di $\\mathbb{R}^3$, yaitu $\\vec{u} = (2, 3, -1)$ dan $\\vec{v} = (1, -2, 1)$.</p>
+                <ol>
+                    <li>Hitunglah hasil kali titik (dot product) $\\vec{u} \\cdot \\vec{v}$.</li>
+                    <li>Tentukan besar sudut $\\theta$ di antara kedua vektor tersebut.</li>
+                    <li>Hitunglah hasil perkalian silang (cross product) $\\vec{u} \\times \\vec{v}$.</li>
+                </ol>
+            `,
+            konsep: `
+                <div class="solve-step">
+                    <h5>Rumus-Rumus Dasar Vektor:</h5>
+                    <ul>
+                        <li><strong>Dot Product:</strong> $\\vec{u} \\cdot \\vec{v} = u_x v_x + u_y v_y + u_z v_z$</li>
+                        <li><strong>Sudut Vektor:</strong> $\\cos(\\theta) = \\frac{\\vec{u} \\cdot \\vec{v}}{\\|\\vec{u}\\| \\|\\vec{v}\\|}$</li>
+                        <li><strong>Cross Product:</strong> $\\vec{u} \\times \\vec{v} = \\det \\begin{bmatrix} \\vec{i} & \\vec{j} & \\vec{k} \\\\ u_x & u_y & u_z \\\\ v_x & v_y & v_z \\end{bmatrix}$</li>
+                    </ul>
+                </div>
+            `,
+            diketahui: `
+                <p><strong>Diketahui:</strong> $\\vec{u} = (2, 3, -1)$ dan $\\vec{v} = (1, -2, 1)$.</p>
+            `,
+            jawaban: `
+                <div class="solve-step">
+                    <h5>Jawaban Bagian 1: Perkalian Titik (Dot Product)</h5>
+                    \\[ \\vec{u} \\cdot \\vec{v} = (2)(1) + (3)(-2) + (-1)(1) \\]
+                    \\[ \\vec{u} \\cdot \\vec{v} = 2 - 6 - 1 = -5 \\]
+                    <p><strong>Hasil dot product adalah:</strong> $-5$.</p>
+                </div>
+
+                <div class="solve-step">
+                    <h5>Jawaban Bagian 2: Menghitung Sudut Vektor</h5>
+                    <p>Hitung panjang masing-masing vektor:</p>
+                    \\[ \\|\\vec{u}\\| = \\sqrt{2^2 + 3^2 + (-1)^2} = \\sqrt{4 + 9 + 1} = \\sqrt{14} \\]
+                    \\[ \\|\\vec{v}\\| = \\sqrt{1^2 + (-2)^2 + 1^2} = \\sqrt{1 + 4 + 1} = \\sqrt{6} \\]
+                    <p>Masukkan ke rumus kosinus:</p>
+                    \\[ \\cos(\\theta) = \\frac{-5}{\\sqrt{14} \\cdot \\sqrt{6}} = \\frac{-5}{\\sqrt{84}} \\approx -0.5455 \\]
+                    \\[ \\theta = \\arccos(-0.5455) \\approx 123.06^\\circ \\]
+                    <p><strong>Besar sudut antara kedua vektor adalah:</strong> $\\approx 123.06^\\circ$.</p>
+                </div>
+
+                <div class="solve-step">
+                    <h5>Jawaban Bagian 3: Perkalian Silang (Cross Product)</h5>
+                    \\[ \\vec{u} \\times \\vec{v} = \\det \\begin{bmatrix} \\vec{i} & \\vec{j} & \\vec{k} \\\\ 2 & 3 & -1 \\\\ 1 & -2 & 1 \\end{bmatrix} \\]
+                    \\[ \\vec{u} \\times \\vec{v} = \\vec{i}(3\\cdot1 - (-1)(-2)) - \\vec{j}(2\\cdot1 - (-1)\\cdot1) + \\vec{k}(2\\cdot(-2) - 3\\cdot1) \\]
+                    \\[ \\vec{u} \\times \\vec{v} = \\vec{i}(3 - 2) - \\vec{j}(2 + 1) + \\vec{k}(-4 - 3) \\]
+                    \\[ \\vec{u} \\times \\vec{v} = \\vec{i} - 3\\vec{j} - 7\\vec{k} = [1, -3, -7] \\]
+                    <p><strong>Hasil cross product adalah:</strong> $[1, -3, -7]$.</p>
+                </div>
+            `
+        },
+        "soal-b-8": {
+            id: "soal-b-8",
+            title: "Soal B8 (Ruang Vektor)",
+            pertanyaan: `
+                <p>Rendy sedang mendesain sistem pencarian dokumen (Information Retrieval System). Diketahui query pencarian direpresentasikan sebagai vektor $\\mathbf{\\bar{Q}} = (2, 0, 1, 0, 0, 0)$. Sistem mencocokkan query dengan tiga dokumen yang direpresentasikan sebagai vektor berikut:</p>
+                <ul>
+                    <li>$\\mathbf{\\bar{D}}_1 = (1, 1, 0, 1, 0, 0)$</li>
+                    <li>$\\mathbf{\\bar{D}}_2 = (1, 1, 1, 0, 0, 0)$</li>
+                    <li>$\\mathbf{\\bar{D}}_3 = (0, 0, 1, 0, 1, 1)$</li>
+                </ul>
+                <ol>
+                    <li>Hitunglah tingkat kemiripan (Cosine Similarity) query $\\mathbf{\\bar{Q}}$ terhadap masing-masing dokumen.</li>
+                    <li>Tentukan urutan kemunculan dokumen di layar laptop Rendy dari yang paling relevan.</li>
+                </ol>
+            `,
+            konsep: `
+                <div class="solve-step">
+                    <h5>Cosine Similarity pada IR System:</h5>
+                    <p>Kemiripan sudut antara vektor query $\\mathbf{Q}$ dan vektor dokumen $\\mathbf{D}$ diukur dengan:</p>
+                    \\[ \\text{Cos}(\\mathbf{Q}, \\mathbf{D}) = \\frac{\\mathbf{Q} \\cdot \\mathbf{D}}{\\|\\mathbf{Q}\\| \\|\\mathbf{D}\\|} \\]
+                    <p>Nilai cosine similarity berkisar antara 0 (tidak ada kata kunci yang cocok) hingga 1 (sangat cocok/identik).</p>
+                </div>
+            `,
+            diketahui: `
+                <p><strong>Diketahui:</strong> Vektor query dan dokumen dalam ruang 6 dimensi.</p>
+            `,
+            jawaban: `
+                <div class="solve-step">
+                    <h5>Langkah 1: Hitung Panjang Vektor Query</h5>
+                    \\[ \\|\\mathbf{\\bar{Q}}\\| = \\sqrt{2^2 + 0^2 + 1^2 + 0^2 + 0^2 + 0^2} = \\sqrt{4 + 0 + 1} = \\sqrt{5} \\]
+                </div>
+
+                <div class="solve-step">
+                    <h5>Langkah 2: Hitung Kemiripan dengan Tiap Dokumen</h5>
+                    
+                    <p><strong>A. Cosine Similarity dengan $\\mathbf{\\bar{D}}_1$:</strong></p>
+                    <p>Panjang dokumen: $\\|\\mathbf{\\bar{D}}_1\\| = \\sqrt{1^2 + 1^2 + 0^2 + 1^2 + 0^2 + 0^2} = \\sqrt{3}$</p>
+                    <p>Dot product: $\\mathbf{\\bar{Q}} \\cdot \\mathbf{\\bar{D}}_1 = (2)(1) + (0)(1) + (1)(0) + 0 + 0 + 0 = 2$</p>
+                    \\[ \\text{Cos}(\\mathbf{\\bar{Q}}, \\mathbf{\\bar{D}}_1) = \\frac{2}{\\sqrt{5} \\cdot \\sqrt{3}} = \\frac{2}{\\sqrt{15}} \\approx 0.516 \\]
+                    
+                    <p><strong>B. Cosine Similarity dengan $\\mathbf{\\bar{D}}_2$:</strong></p>
+                    <p>Panjang dokumen: $\\|\\mathbf{\\bar{D}}_2\\| = \\sqrt{1^2 + 1^2 + 1^2 + 0^2 + 0^2 + 0^2} = \\sqrt{3}$</p>
+                    <p>Dot product: $\\mathbf{\\bar{Q}} \\cdot \\mathbf{\\bar{D}}_2 = (2)(1) + (0)(1) + (1)(1) + 0 + 0 + 0 = 3$</p>
+                    \\[ \\text{Cos}(\\mathbf{\\bar{Q}}, \\mathbf{\\bar{D}}_2) = \\frac{3}{\\sqrt{5} \\cdot \\sqrt{3}} = \\frac{3}{\\sqrt{15}} = \\frac{\\sqrt{15}}{5} \\approx 0.775 \\]
+                    
+                    <p><strong>C. Cosine Similarity dengan $\\mathbf{\\bar{D}}_3$:</strong></p>
+                    <p>Panjang dokumen: $\\|\\mathbf{\\bar{D}}_3\\| = \\sqrt{0^2 + 0^2 + 1^2 + 0^2 + 1^2 + 1^2} = \\sqrt{3}$</p>
+                    <p>Dot product: $\\mathbf{\\bar{Q}} \\cdot \\mathbf{\\bar{D}}_3 = (2)(0) + (0)(0) + (1)(1) + 0 + 0 + 0 = 1$</p>
+                    \\[ \\text{Cos}(\\mathbf{\\bar{Q}}, \\mathbf{\\bar{D}}_3) = \\frac{1}{\\sqrt{5} \\cdot \\sqrt{3}} = \\frac{1}{\\sqrt{15}} \\approx 0.258 \\]
+                </div>
+
+                <div class="solve-step">
+                    <h5>Langkah 3: Tentukan Urutan Dokumen yang Muncul</h5>
+                    <p>Mengurutkan dari nilai similarity tertinggi ke terendah:</p>
+                    <ol>
+                        <li>Dokumen 2 (Similarity: $0.775$)</li>
+                        <li>Dokumen 1 (Similarity: $0.516$)</li>
+                        <li>Dokumen 3 (Similarity: $0.258$)</li>
+                    </ol>
+                    <p><strong>Urutan kemunculan dokumen di layar laptop Rendy:</strong> $D_2 \\rightarrow D_1 \\rightarrow D_3$.</p>
+                </div>
+            `
+        }
     }
 };

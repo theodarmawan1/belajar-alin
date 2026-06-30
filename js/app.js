@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Dynamic states
     let activeSection = "dashboard";
     let activeSoalATab = "pertanyaan";
+    let activeSoalBTab = "pertanyaan";
     let activeSoalCTab = "pertanyaan";
     let isVisualizerInit = false;
 
@@ -42,6 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
             "theory-3": "Babak 3: Persamaan Bidang 3D",
             "theory-relations": "Hubungan Geometris",
             "soal-a": "Latihan Soal Topic A: Garis & Bidang",
+            "soal-b": "Latihan Soal Topic B: Vektor & Ruang Vektor",
             "soal-c": "Latihan Soal Topic C: Nilai Eigen",
             "calc-3d": "Kalkulator Geometri 3D Interaktif",
             "calc-eigen": "Kalkulator Nilai Eigen & Diagonalisasi"
@@ -53,6 +55,8 @@ document.addEventListener("DOMContentLoaded", () => {
             loadTheoryContent(targetId);
         } else if (targetId === "soal-a") {
             initSoalLayout("a");
+        } else if (targetId === "soal-b") {
+            initSoalLayout("b");
         } else if (targetId === "soal-c") {
             initSoalLayout("c");
         } else if (targetId === "calc-3d") {
@@ -157,8 +161,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- MODUL LATIHAN SOAL (TOPIC A & C) ---
+    // --- MODUL LATIHAN SOAL (TOPIC A, B, & C) ---
     let currentSoalAIndex = 0;
+    let currentSoalBIndex = 0;
     let currentSoalCIndex = 0;
 
     function initSoalLayout(topic) {
@@ -168,12 +173,20 @@ document.addEventListener("DOMContentLoaded", () => {
         // Kosongkan list
         listSidebar.innerHTML = "";
 
-        const totalSoal = topic === "a" ? 9 : 9; // 0 sampai 8 = 9 soal
+        const totalSoal = 9; // 0 sampai 8 = 9 soal untuk semua topik
         
         for (let i = 0; i < totalSoal; i++) {
             const btn = document.createElement("button");
             btn.className = `soal-btn ${i === 0 ? 'active' : ''}`;
-            btn.textContent = topic === "a" ? `Soal ${i}` : `Soal C${i}`;
+            
+            if (topic === "a") {
+                btn.textContent = `Soal ${i}`;
+            } else if (topic === "b") {
+                btn.textContent = `Soal B${i}`;
+            } else {
+                btn.textContent = `Soal C${i}`;
+            }
+            
             btn.addEventListener("click", () => {
                 // Set active class
                 listSidebar.querySelectorAll(".soal-btn").forEach(b => b.classList.remove("active"));
@@ -182,6 +195,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (topic === "a") {
                     currentSoalAIndex = i;
                     loadSoalContent("a", i);
+                } else if (topic === "b") {
+                    currentSoalBIndex = i;
+                    loadSoalContent("b", i);
                 } else {
                     currentSoalCIndex = i;
                     loadSoalContent("c", i);
@@ -213,8 +229,8 @@ document.addEventListener("DOMContentLoaded", () => {
         tabDiketahui.innerHTML = data.diketahui;
         tabJawaban.innerHTML = data.jawaban;
 
-        // Tambahkan tombol visualisasi 3D dinamis untuk Topic A
-        if (topic === "a") {
+        // Tambahkan tombol visualisasi 3D dinamis untuk Topic A & B
+        if (topic === "a" || (topic === "b" && [0, 1, 2, 4, 7, 8].includes(index))) {
             const btnContainer = document.createElement("div");
             btnContainer.className = "mt-4 pt-3";
             btnContainer.style.borderTop = "1px dashed rgba(255, 255, 255, 0.1)";
@@ -223,7 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
             btn.className = "btn btn-primary btn-sm";
             btn.innerHTML = `<i data-lucide="eye"></i> Visualisasikan Soal Ini dalam 3D`;
             btn.addEventListener("click", () => {
-                visualizeExercisePreset(index);
+                visualizeExercisePreset(topic === "a" ? index : index + 10);
             });
             btnContainer.appendChild(btn);
             tabPertanyaan.appendChild(btnContainer);
@@ -258,13 +274,16 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 });
 
-                if (topic === "a") activeSoalATab = targetTab;
-                else activeSoalCTab = targetTab;
+                if (topic === "a") {
+                    activeSoalATab = targetTab;
+                } else if (topic === "b") {
+                    activeSoalBTab = targetTab;
+                } else {
+                    activeSoalCTab = targetTab;
+                }
             });
         });
-    }
-
-    // --- MODUL KALKULATOR 3D (GEOMETRI) ---
+    }// --- MODUL KALKULATOR 3D (GEOMETRI) ---
     const calc3dOpSelect = document.getElementById("calc-3d-operation");
     const calc3dInputs = document.getElementById("calc-3d-inputs");
     const btnCalculate3d = document.getElementById("btn-calculate-3d");
@@ -691,7 +710,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Fungsi preset visualisasi untuk soal latihan Topic A
+    // Fungsi preset visualisasi untuk soal latihan Topic A & B
     function visualizeExercisePreset(index) {
         // Pindah ke section kalkulator
         switchSection("calc-3d");
@@ -699,108 +718,213 @@ document.addEventListener("DOMContentLoaded", () => {
         // Tunggu transisi halaman selesai, lalu set nilai input
         setTimeout(() => {
             const opSelect = document.getElementById("calc-3d-operation");
-            if (!opSelect) return;
+            const outputEl = document.getElementById("calc-3d-output");
+            if (!opSelect || !outputEl) return;
 
-            if (index === 0) {
-                opSelect.value = "plane-point-normal";
-                initCalculator3DInputs();
-                document.getElementById("p-x").value = 9;
-                document.getElementById("p-y").value = 3;
-                document.getElementById("p-z").value = 2;
-                document.getElementById("n-a").value = 4;
-                document.getElementById("n-b").value = 7;
-                document.getElementById("n-c").value = 8;
-            } else if (index === 1) {
-                opSelect.value = "plane-point-normal";
-                initCalculator3DInputs();
-                document.getElementById("p-x").value = 1;
-                document.getElementById("p-y").value = 3;
-                document.getElementById("p-z").value = 9;
-                document.getElementById("n-a").value = 5;
-                document.getElementById("n-b").value = 2;
-                document.getElementById("n-c").value = 1;
-            } else if (index === 2) {
-                opSelect.value = "two-planes-relation";
-                initCalculator3DInputs();
-                document.getElementById("n1-a").value = 1;
-                document.getElementById("n1-b").value = -1;
-                document.getElementById("n1-c").value = 2;
-                document.getElementById("d1").value = 3;
-                document.getElementById("n2-a").value = 2;
-                document.getElementById("n2-b").value = 3;
-                document.getElementById("n2-c").value = -1;
-                document.getElementById("d2").value = 4;
-            } else if (index === 3) {
-                opSelect.value = "plane-point-normal";
-                initCalculator3DInputs();
-                document.getElementById("p-x").value = 0;
-                document.getElementById("p-y").value = 0;
-                document.getElementById("p-z").value = 0;
-                document.getElementById("n-a").value = -2;
-                document.getElementById("n-b").value = -1;
-                document.getElementById("n-c").value = 2;
-            } else if (index === 4) {
-                opSelect.value = "line-point-direction";
-                initCalculator3DInputs();
-                document.getElementById("lp-x").value = 1;
-                document.getElementById("lp-y").value = -2;
-                document.getElementById("lp-z").value = 3;
-                document.getElementById("ld-a").value = 3;
-                document.getElementById("ld-b").value = -1;
-                document.getElementById("ld-c").value = 5;
-            } else if (index === 5) {
-                opSelect.value = "line-plane-intersection";
-                initCalculator3DInputs();
-                document.getElementById("ilp-x").value = 3;
-                document.getElementById("ilp-y").value = 1;
-                document.getElementById("ilp-z").value = 7;
-                document.getElementById("ild-a").value = 2;
-                document.getElementById("ild-b").value = -1;
-                document.getElementById("ild-c").value = 3;
-                document.getElementById("ipn-a").value = 3;
-                document.getElementById("ipn-b").value = 4;
-                document.getElementById("ipn-c").value = 5;
-                document.getElementById("ipn-d").value = 31;
-            } else if (index === 6) {
-                opSelect.value = "line-plane-intersection";
-                initCalculator3DInputs();
-                document.getElementById("ilp-x").value = -2;
-                document.getElementById("ilp-y").value = -1;
-                document.getElementById("ilp-z").value = 4;
-                document.getElementById("ild-a").value = 2;
-                document.getElementById("ild-b").value = 4;
-                document.getElementById("ild-c").value = 0;
-                document.getElementById("ipn-a").value = 2;
-                document.getElementById("ipn-b").value = -1;
-                document.getElementById("ipn-c").value = -3;
-                document.getElementById("ipn-d").value = 4;
-            } else if (index === 7) {
-                opSelect.value = "plane-three-points";
-                initCalculator3DInputs();
-                document.getElementById("p1-x").value = 2;
-                document.getElementById("p1-y").value = -1;
-                document.getElementById("p1-z").value = 4;
-                document.getElementById("p2-x").value = -3;
-                document.getElementById("p2-y").value = 5;
-                document.getElementById("p2-z").value = -1;
-                document.getElementById("p3-x").value = 1;
-                document.getElementById("p3-y").value = 2;
-                document.getElementById("p3-z").value = -3;
-            } else if (index === 8) {
-                opSelect.value = "two-planes-relation";
-                initCalculator3DInputs();
-                document.getElementById("n1-a").value = 1;
-                document.getElementById("n1-b").value = -2;
-                document.getElementById("n1-c").value = 3;
-                document.getElementById("d1").value = 1;
-                document.getElementById("n2-a").value = 1;
-                document.getElementById("n2-b").value = 1;
-                document.getElementById("n2-c").value = 1;
-                document.getElementById("d2").value = 1;
+            // Jika indeks < 10, itu adalah soal Topic A (menggunakan input kalkulator standar)
+            if (index < 10) {
+                if (index === 0) {
+                    opSelect.value = "plane-point-normal";
+                    initCalculator3DInputs();
+                    document.getElementById("p-x").value = 9;
+                    document.getElementById("p-y").value = 3;
+                    document.getElementById("p-z").value = 2;
+                    document.getElementById("n-a").value = 4;
+                    document.getElementById("n-b").value = 7;
+                    document.getElementById("n-c").value = 8;
+                } else if (index === 1) {
+                    opSelect.value = "plane-point-normal";
+                    initCalculator3DInputs();
+                    document.getElementById("p-x").value = 1;
+                    document.getElementById("p-y").value = 3;
+                    document.getElementById("p-z").value = 9;
+                    document.getElementById("n-a").value = 5;
+                    document.getElementById("n-b").value = 2;
+                    document.getElementById("n-c").value = 1;
+                } else if (index === 2) {
+                    opSelect.value = "two-planes-relation";
+                    initCalculator3DInputs();
+                    document.getElementById("n1-a").value = 1;
+                    document.getElementById("n1-b").value = -1;
+                    document.getElementById("n1-c").value = 2;
+                    document.getElementById("d1").value = 3;
+                    document.getElementById("n2-a").value = 2;
+                    document.getElementById("n2-b").value = 3;
+                    document.getElementById("n2-c").value = -1;
+                    document.getElementById("d2").value = 4;
+                } else if (index === 3) {
+                    opSelect.value = "plane-point-normal";
+                    initCalculator3DInputs();
+                    document.getElementById("p-x").value = 0;
+                    document.getElementById("p-y").value = 0;
+                    document.getElementById("p-z").value = 0;
+                    document.getElementById("n-a").value = -2;
+                    document.getElementById("n-b").value = -1;
+                    document.getElementById("n-c").value = 2;
+                } else if (index === 4) {
+                    opSelect.value = "line-point-direction";
+                    initCalculator3DInputs();
+                    document.getElementById("lp-x").value = 1;
+                    document.getElementById("lp-y").value = -2;
+                    document.getElementById("lp-z").value = 3;
+                    document.getElementById("ld-a").value = 3;
+                    document.getElementById("ld-b").value = -1;
+                    document.getElementById("ld-c").value = 5;
+                } else if (index === 5) {
+                    opSelect.value = "line-plane-intersection";
+                    initCalculator3DInputs();
+                    document.getElementById("ilp-x").value = 3;
+                    document.getElementById("ilp-y").value = 1;
+                    document.getElementById("ilp-z").value = 7;
+                    document.getElementById("ild-a").value = 2;
+                    document.getElementById("ild-b").value = -1;
+                    document.getElementById("ild-c").value = 3;
+                    document.getElementById("ipn-a").value = 3;
+                    document.getElementById("ipn-b").value = 4;
+                    document.getElementById("ipn-c").value = 5;
+                    document.getElementById("ipn-d").value = 31;
+                } else if (index === 6) {
+                    opSelect.value = "line-plane-intersection";
+                    initCalculator3DInputs();
+                    document.getElementById("ilp-x").value = -2;
+                    document.getElementById("ilp-y").value = -1;
+                    document.getElementById("ilp-z").value = 4;
+                    document.getElementById("ild-a").value = 2;
+                    document.getElementById("ild-b").value = 4;
+                    document.getElementById("ild-c").value = 0;
+                    document.getElementById("ipn-a").value = 2;
+                    document.getElementById("ipn-b").value = -1;
+                    document.getElementById("ipn-c").value = -3;
+                    document.getElementById("ipn-d").value = 4;
+                } else if (index === 7) {
+                    opSelect.value = "plane-three-points";
+                    initCalculator3DInputs();
+                    document.getElementById("p1-x").value = 2;
+                    document.getElementById("p1-y").value = -1;
+                    document.getElementById("p1-z").value = 4;
+                    document.getElementById("p2-x").value = -3;
+                    document.getElementById("p2-y").value = 5;
+                    document.getElementById("p2-z").value = -1;
+                    document.getElementById("p3-x").value = 1;
+                    document.getElementById("p3-y").value = 2;
+                    document.getElementById("p3-z").value = -3;
+                } else if (index === 8) {
+                    opSelect.value = "two-planes-relation";
+                    initCalculator3DInputs();
+                    document.getElementById("n1-a").value = 1;
+                    document.getElementById("n1-b").value = -2;
+                    document.getElementById("n1-c").value = 3;
+                    document.getElementById("d1").value = 1;
+                    document.getElementById("n2-a").value = 1;
+                    document.getElementById("n2-b").value = 1;
+                    document.getElementById("n2-c").value = 1;
+                    document.getElementById("d2").value = 1;
+                }
+                
+                // Jalankan hitung standar
+                runCalculator3D();
+            } else {
+                // Topic B (menggunakan plotting langsung di visualizer)
+                Visualizer3D.clear();
+                
+                if (index === 10) { // Soal B0
+                    Visualizer3D.drawVector([1, 2, 0], [3, -3, 0], 0xef4444); // u - Red
+                    Visualizer3D.drawVector([1, 2, 0], [-5, -5, 0], 0x10b981); // v - Green
+                    Visualizer3D.drawVector([-4, -3, 0], [5, 8, 0], 0x3b82f6); // w - Blue
+                    // Draw points
+                    Visualizer3D.drawPoint([1, 2, 0], 0xf59e0b, 0.18);
+                    Visualizer3D.drawPoint([4, -1, 0], 0xf59e0b, 0.18);
+                    Visualizer3D.drawPoint([-4, -3, 0], 0xf59e0b, 0.18);
+                    Visualizer3D.drawPoint([1, 5, 0], 0xf59e0b, 0.18);
+                    
+                    outputEl.innerHTML = `
+                        <div class="solve-step">
+                            <h5>Visualisasi Grafik Vektor Soal B0 (Bidang Z = 0)</h5>
+                            <p><span class="badge" style="background:#ef4444">Merah</span> Vektor $\\mathbf{u} = [3, -3]$ (Pangkal $(1,2)$, Ujung $(4,-1)$)</p>
+                            <p><span class="badge" style="background:#10b981">Hijau</span> Vektor $\\mathbf{v} = [-5, -5]$ (Pangkal $(1,2)$, Ujung $(-4,-3)$)</p>
+                            <p><span class="badge" style="background:#3b82f6">Biru</span> Vektor $\\mathbf{w} = [5, 8]$ (Pangkal $(-4,-3)$, Ujung $(1,5)$)</p>
+                            <p>Penjumlahan $\\mathbf{u} + \\mathbf{v} + \\mathbf{w} = [3, 0]$ diilustrasikan dengan menghubungkan pangkal vektor pertama ke ujung vektor terakhir secara berurutan.</p>
+                        </div>
+                    `;
+                } else if (index === 11) { // Soal B1
+                    Visualizer3D.drawVector([0, 0, 0], [1, 0, 2], 0xef4444); // v1
+                    Visualizer3D.drawVector([0, 0, 0], [3, 1, 1], 0x10b981); // v2
+                    Visualizer3D.drawVector([0, 0, 0], [2, -1, 3], 0x3b82f6); // v3
+                    Visualizer3D.drawVector([0, 0, 0], [13, 2, 10], 0xa855f7); // w
+                    
+                    outputEl.innerHTML = `
+                        <div class="solve-step">
+                            <h5>Visualisasi Vektor Bebas Linear & Kombinasi Linear Soal B1</h5>
+                            <p><span class="badge" style="background:#ef4444">Merah</span> Vektor $\\mathbf{v}_1 = (1, 0, 2)$</p>
+                            <p><span class="badge" style="background:#10b981">Hijau</span> Vektor $\\mathbf{v}_2 = (3, 1, 1)$</p>
+                            <p><span class="badge" style="background:#3b82f6">Biru</span> Vektor $\\mathbf{v}_3 = (2, -1, 3)$</p>
+                            <p><span class="badge" style="background:#a855f7">Ungu</span> Vektor Kombinasi $\\mathbf{w} = (13, 2, 10) = 2\\mathbf{v}_1 + 3\\mathbf{v}_2 + \\mathbf{v}_3$</p>
+                            <p>Keempat vektor tersebut ditarik dari titik pusat koordinat $(0,0,0)$.</p>
+                        </div>
+                    `;
+                } else if (index === 12) { // Soal B2
+                    Visualizer3D.drawVector([0, 0, 0], [4, 4, 0], 0x10b981); // a+b
+                    Visualizer3D.drawVector([0, 0, 0], [2, 0, 4], 0x3b82f6); // a-b
+                    Visualizer3D.drawVector([0, 0, 0], [16, -16, -8], 0xef4444); // c
+                    
+                    outputEl.innerHTML = `
+                        <div class="solve-step">
+                            <h5>Visualisasi Vektor Tegak Lurus (Cross Product) Soal B2</h5>
+                            <p><span class="badge" style="background:#10b981">Hijau</span> Vektor $\\vec{a} + \\vec{b} = (4, 4, 0)$</p>
+                            <p><span class="badge" style="background:#3b82f6">Biru</span> Vektor $\\vec{a} - \\vec{b} = (2, 0, 4)$</p>
+                            <p><span class="badge" style="background:#ef4444">Merah</span> Vektor $\\vec{c} = (\\vec{a}+\\vec{b}) \\times (\\vec{a}-\\vec{b}) = (16, -16, -8)$</p>
+                            <p>Vektor $\\vec{c}$ (merah) terbukti tegak lurus ($90^\\circ$) terhadap bidang yang dibentuk oleh $\\vec{a}+\\vec{b}$ dan $\\vec{a}-\\vec{b}$.</p>
+                        </div>
+                    `;
+                } else if (index === 14) { // Soal B4
+                    Visualizer3D.drawVector([0, 0, 0], [1, 0, 1], 0xef4444); // v1
+                    Visualizer3D.drawVector([0, 0, 0], [1, 1, 0], 0x10b981); // v2
+                    Visualizer3D.drawVector([0, 0, 0], [0, 1, 1], 0x3b82f6); // v3
+                    Visualizer3D.drawVector([0, 0, 0], [1, 2, 3], 0xa855f7); // w
+                    
+                    outputEl.innerHTML = `
+                        <div class="solve-step">
+                            <h5>Visualisasi Kombinasi Linear Soal B4</h5>
+                            <p><span class="badge" style="background:#ef4444">Merah</span> Vektor $\\mathbf{v}_1 = (1, 0, 1)$</p>
+                            <p><span class="badge" style="background:#10b981">Hijau</span> Vektor $\\mathbf{v}_2 = (1, 1, 0)$</p>
+                            <p><span class="badge" style="background:#3b82f6">Biru</span> Vektor $\\mathbf{v}_3 = (0, 1, 1)$</p>
+                            <p><span class="badge" style="background:#a855f7">Ungu</span> Vektor $\\mathbf{w} = (1, 2, 3) = \\mathbf{v}_1 + 2\\mathbf{v}_3$</p>
+                        </div>
+                    `;
+                } else if (index === 17) { // Soal B7
+                    Visualizer3D.drawVector([0, 0, 0], [2, 3, -1], 0x10b981); // u
+                    Visualizer3D.drawVector([0, 0, 0], [1, -2, 1], 0x3b82f6); // v
+                    Visualizer3D.drawVector([0, 0, 0], [1, -3, -7], 0xef4444); // u x v
+                    
+                    outputEl.innerHTML = `
+                        <div class="solve-step">
+                            <h5>Visualisasi Sudut & Cross Product Soal B7</h5>
+                            <p><span class="badge" style="background:#10b981">Hijau</span> Vektor $\\vec{u} = (2, 3, -1)$</p>
+                            <p><span class="badge" style="background:#3b82f6">Biru</span> Vektor $\\vec{v} = (1, -2, 1)$</p>
+                            <p><span class="badge" style="background:#ef4444">Merah</span> Cross Product $\\vec{u} \\times \\vec{v} = (1, -3, -7)$</p>
+                            <p>Sudut di antara $\\vec{u}$ dan $\\vec{v}$ adalah $\\approx 123.06^\\circ$. Vektor merah tegak lurus terhadap $\\vec{u}$ dan $\\vec{v}$.</p>
+                        </div>
+                    `;
+                } else if (index === 18) { // Soal B8
+                    Visualizer3D.drawVector([0, 0, 0], [2, 0, 1], 0xef4444); // Q
+                    Visualizer3D.drawVector([0, 0, 0], [1, 1, 0], 0x10b981); // D1
+                    Visualizer3D.drawVector([0, 0, 0], [1, 1, 1], 0x3b82f6); // D2
+                    Visualizer3D.drawVector([0, 0, 0], [0, 0, 1], 0xa855f7); // D3
+                    
+                    outputEl.innerHTML = `
+                        <div class="solve-step">
+                            <h5>Visualisasi Cosine Similarity Soal B8 (Proyeksi 3 Dimensi Pertama)</h5>
+                            <p><span class="badge" style="background:#ef4444">Merah</span> Query $\\mathbf{Q} \\approx (2, 0, 1)$</p>
+                            <p><span class="badge" style="background:#10b981">Hijau</span> Dokumen $\\mathbf{D}_1 \\approx (1, 1, 0)$ (Sim: $0.516$)</p>
+                            <p><span class="badge" style="background:#3b82f6">Biru</span> Dokumen $\\mathbf{D}_2 \\approx (1, 1, 1)$ (Sim: $0.775$)</p>
+                            <p><span class="badge" style="background:#a855f7">Ungu</span> Dokumen $\\mathbf{D}_3 \\approx (0, 0, 1)$ (Sim: $0.258$)</p>
+                            <p>Vektor yang membentuk sudut terkecil dengan vektor Query (merah) adalah $\\mathbf{D}_2$ (biru), sehingga menduduki peringkat teratas dalam hasil pencarian.</p>
+                        </div>
+                    `;
+                }
+                
+                triggerKaTeX(outputEl);
             }
-
-            // Jalankan hitung
-            runCalculator3D();
         }, 200);
     }
 
