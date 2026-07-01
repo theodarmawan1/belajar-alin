@@ -214,12 +214,157 @@ const theoryContent = {
                     \\[ \\vec{v} = \\vec{n}_1 \\times \\vec{n}_2 \\]
                 </div>
 
-                <div class="theory-navigation mt-5">
-                    <button class="btn btn-outline btn-sm btn-prev-theory" data-prev="theory-3">
-                        <i data-lucide="arrow-left"></i> Kembali ke Babak 3
-                    </button>
-                    <button class="btn btn-secondary btn-sm btn-nav-redirect" data-redirect="soal-a">
-                        Coba Latihan Soal Topic A <i data-lucide="help-circle"></i>
+            </div>
+        `
+    },
+    "basic-theory": {
+        title: "Kumpulan Materi Dasar",
+        content: `
+            <div class="theory-card">
+                <h1>Kumpulan Materi Dasar Aljabar Linear</h1>
+                <p class="lead">Selamat datang di perpustakaan materi dasar! Di sini kita membedah konsep-konsep inti Aljabar Linear secara santai, terstruktur, dan mudah dipahami oleh pemula sekalipun. Yuk, kita pelajari satu per satu!</p>
+                
+                <!-- SUB-MATERI 1: OPERASI MATRIKS -->
+                <div class="theory-subcard mt-4" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.2)">
+                    <h3 style="color: var(--indigo); display: flex; align-items: center; gap: 0.5rem">
+                        <i data-lucide="grid"></i> 1. Operasi Matriks, Determinan, & Invers
+                    </h3>
+                    
+                    <div class="mt-3">
+                        <h5 style="color: var(--cyan); margin-bottom: 0.5rem">💡 Pemahaman Dasar</h5>
+                        <p>Bayangkan matriks seperti tabel mini yang menyimpan angka-angka. Yang paling sering menjebak pemula adalah <strong>perkalian matriks</strong>. Ingat, perkalian matriks tidak dilakukan elemen-per-elemen secara langsung, melainkan dengan cara <strong>Baris dikali Kolom</strong> (kita singkat <strong>Baris x Kolom = Ba-Ko</strong>). Invers matriks ($A^{-1}$) mirip seperti pembagian pada angka biasa (misal $5^{-1} = 1/5$). Jika kita punya persamaan matriks $QS = R$, kita tidak bisa membagi dengan $Q$, melainkan harus mengalikan dengan inversnya $Q^{-1}$ dari arah kiri.</p>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <h5 style="color: var(--cyan); margin-bottom: 0.5rem">📐 Pembahasan Rumus</h5>
+                        <p><strong>A. Perkalian Matriks $2 \\times 2$:</strong></p>
+                        \\[ \\begin{bmatrix} a & b \\\\ c & d \\end{bmatrix} \\begin{bmatrix} e & f \\\\ g & h \\end{bmatrix} = \\begin{bmatrix} ae+bg & af+bh \\\\ ce+dg & cf+dh \\end{bmatrix} \\]
+                        
+                        <p class="mt-2"><strong>B. Determinan dan Invers Matriks $2 \\times 2$:</strong></p>
+                        \\[ \\det(A) = ad - bc \\]
+                        \\[ A^{-1} = \\frac{1}{ad - bc} \\begin{bmatrix} d & -b \\\\ -c & a \\end{bmatrix} \\]
+                        
+                        <p class="mt-2"><strong>C. Invers Matriks $3 \\times 3$:</strong></p>
+                        \\[ A^{-1} = \\frac{1}{\\det(A)} \\text{adj}(A) \\]
+                        <p>di mana $\\text{adj}(A)$ adalah matriks kofaktor yang di-transpose ($C^T$).</p>
+                    </div>
+                    
+                    <div class="alert-info mt-3" style="background: rgba(99,102,241,0.1); border-left: 4px solid var(--indigo); padding: 1rem; border-radius: 6px">
+                        <h5 style="color: var(--indigo); display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem">
+                            <i data-lucide="zap"></i> Tips Kreatif (Anti-Terkecoh)
+                        </h5>
+                        <p><strong>Ingat BA-KO!</strong> Saat mengalikan matriks, telusuri jari kiri mendatar di baris matriks pertama, dan jari kanan tegak di kolom matriks kedua. Untuk invers $2 \\times 2$, ingat jembatan keledai ini: <em>"Tukar tempat diagonal utama, ganti tanda diagonal samping, lalu bagi determinan!"</em> ($a$ dan $d$ bertukar tempat; $b$ dan $c$ berubah tanda jadi negatif).</p>
+                    </div>
+                </div>
+                
+                <!-- SUB-MATERI 2: VEKTOR -->
+                <div class="theory-subcard mt-4" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.2)">
+                    <h3 style="color: var(--indigo); display: flex; align-items: center; gap: 0.5rem">
+                        <i data-lucide="git-merge"></i> 2. Vektor di Ruang $\\mathbb{R}^n$ (Dot & Cross Product)
+                    </h3>
+                    
+                    <div class="mt-3">
+                        <h5 style="color: var(--cyan); margin-bottom: 0.5rem">💡 Pemahaman Dasar</h5>
+                        <p>Vektor adalah sebuah instruksi pergeseran atau anak panah yang memiliki <strong>Arah</strong> dan <strong>Panjang</strong>. Ada dua cara mengalikan vektor:</p>
+                        <ul>
+                            <li><strong>Dot Product (Hasil Kali Titik):</strong> Menghasilkan <em>skalar (angka biasa)</em>. Ini mengukur seberapa sejajar kedua vektor tersebut. Jika tegak lurus, dot product-nya pasti nol!</li>
+                            <li><strong>Cross Product (Hasil Kali Silang):</strong> Hanya ada di ruang 3D, menghasilkan <em>vektor baru</em> yang berdiri tegak lurus secara sempurna terhadap kedua vektor asal.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <h5 style="color: var(--cyan); margin-bottom: 0.5rem">📐 Pembahasan Rumus</h5>
+                        <p><strong>A. Panjang (Norm) Vektor $\\vec{u} = [u_x, u_y, u_z]$:</strong></p>
+                        \\[ \\|\\vec{u}\\| = \\sqrt{u_x^2 + u_y^2 + u_z^2} \\]
+                        
+                        <p class="mt-2"><strong>B. Dot Product & Sudut antara Dua Vektor:</strong></p>
+                        \\[ \\vec{u} \\cdot \\vec{v} = u_x v_x + u_y v_y + u_z v_z = \\|\\vec{u}\\| \\|\\vec{v}\\| \\cos(\\theta) \\]
+                        \\[ \\theta = \\arccos\\left( \\frac{\\vec{u} \\cdot \\vec{v}}{\\|\\vec{u}\\| \\|\\vec{v}\\|} \\right) \\]
+                        
+                        <p class="mt-2"><strong>C. Cross Product (Metode Determinan $3 \\times 3$):</strong></p>
+                        \\[ \\vec{u} \\times \\vec{v} = \\det \\begin{bmatrix} \\vec{i} & \\vec{j} & \\vec{k} \\\\ u_x & u_y & u_z \\\\ v_x & v_y & v_z \\end{bmatrix} = [u_y v_z - u_z v_y, \\ -(u_x v_z - u_z v_x), \\ u_x v_y - u_y v_x] \\]
+                    </div>
+                    
+                    <div class="alert-info mt-3" style="background: rgba(99,102,241,0.1); border-left: 4px solid var(--indigo); padding: 1rem; border-radius: 6px">
+                        <h5 style="color: var(--indigo); display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem">
+                            <i data-lucide="zap"></i> Tips Kreatif (Anti-Terkecoh)
+                        </h5>
+                        <p><strong>Siku-Siku = Dot Product 0!</strong> Jika ada soal ujian menyebutkan kata <em>"saling tegak lurus"</em> atau <em>"ortogonal"</em>, langsung buat persamaan $\\vec{u} \\cdot \\vec{v} = 0$. Ini adalah trik tercepat menyelesaikan soal parameter tak diketahui. Ingat juga bahwa perkalian silang tidak komutatif: $\\vec{u} \\times \\vec{v} = -(\\vec{v} \\times \\vec{u})$ (arahnya terbalik!).</p>
+                    </div>
+                </div>
+                
+                <!-- SUB-MATERI 3: GARIS & BIDANG -->
+                <div class="theory-subcard mt-4" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.2)">
+                    <h3 style="color: var(--indigo); display: flex; align-items: center; gap: 0.5rem">
+                        <i data-lucide="box"></i> 3. Garis & Bidang di Ruang 3D
+                    </h3>
+                    
+                    <div class="mt-3">
+                        <h5 style="color: var(--cyan); margin-bottom: 0.5rem">💡 Pemahaman Dasar</h5>
+                        <p>Di ruang 3D, sebuah garis tidak bisa ditulis sebagai persamaan sederhana seperti $y=mx+c$. Kita butuh **satu titik awal** ($P_0$) dan **satu arah pergeseran** (vektor arah $\\vec{v}$). Sedangkan untuk mendefinisikan sebuah bidang datar, kita membutuhkan **satu titik acuan** di bidang dan **satu tiang penyangga** yang tegak lurus bidang tersebut, yang disebut <strong>Vektor Normal ($\\vec{n}$)</strong>. Vektor normal ini mengunci kemiringan bidang agar tidak goyang.</p>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <h5 style="color: var(--cyan); margin-bottom: 0.5rem">📐 Pembahasan Rumus</h5>
+                        <p><strong>A. Persamaan Vektor & Parametrik Garis melalui $P_0(x_0, y_0, z_0)$ searah $\\vec{v}=[a,b,c]$:</strong></p>
+                        \\[ \\vec{r} = \\vec{r}_0 + t\\vec{v} \\implies [x, y, z] = [x_0, y_0, z_0] + t[a, b, c] \\]
+                        \\[ x = x_0 + at, \\quad y = y_0 + bt, \\quad z = z_0 + ct \\]
+                        
+                        <p class="mt-2"><strong>B. Persamaan Bidang (Bentuk Point-Normal):</strong></p>
+                        \\[ a(x-x_0) + b(y-y_0) + c(z-z_0) = 0 \\implies ax + by + cz = d \\]
+                        <p>di mana $d = ax_0 + by_0 + cz_0$ dan $\\vec{n}=[a,b,c]$ adalah vektor normal bidang.</p>
+                    </div>
+                    
+                    <div class="alert-info mt-3" style="background: rgba(99,102,241,0.1); border-left: 4px solid var(--indigo); padding: 1rem; border-radius: 6px">
+                        <h5 style="color: var(--indigo); display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem">
+                            <i data-lucide="zap"></i> Tips Kreatif (Anti-Terkecoh)
+                        </h5>
+                        <p><strong>Koefisien Bidang adalah Normalnya!</strong> Jika Anda melihat persamaan bidang seperti $2x - 3y + z = 8$, Anda langsung mengetahui vektor normalnya adalah $\\vec{n} = [2, -3, 1]$ tanpa perlu menghitung apa pun! Ini sangat berguna saat Anda mencari hubungan bidang (sejajar/tegak lurus) di soal ujian.</p>
+                    </div>
+                </div>
+                
+                <!-- SUB-MATERI 4: NILAI EIGEN -->
+                <div class="theory-subcard mt-4" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.2)">
+                    <h3 style="color: var(--indigo); display: flex; align-items: center; gap: 0.5rem">
+                        <i data-lucide="cpu"></i> 4. Nilai Eigen, Vektor Eigen, & Diagonalisasi
+                    </h3>
+                    
+                    <div class="mt-3">
+                        <h5 style="color: var(--cyan); margin-bottom: 0.5rem">💡 Pemahaman Dasar</h5>
+                        <p>Biasanya, mengalikan matriks $A$ dengan vektor $\\vec{v}$ akan merotasi arah vektor tersebut. Namun, untuk beberapa vektor istimewa yang disebut <strong>Vektor Eigen</strong>, arahnya <em>tidak berubah sama sekali</em>! Vektor tersebut hanya memanjang atau memendek sebesar faktor skala $\\lambda$ yang dinamakan <strong>Nilai Eigen</strong>. Diagonalisasi ($P^{-1}AP=D$) adalah proses menata vektor eigen ini menjadi matriks transisi $P$ agar matriks asal $A$ berubah menjadi matriks diagonal $D$ yang super mudah dihitung pangkat tingginya.</p>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <h5 style="color: var(--cyan); margin-bottom: 0.5rem">📐 Pembahasan Rumus</h5>
+                        <p><strong>A. Persamaan Karakteristik (Mencari $\\lambda$):</strong></p>
+                        \\[ \\det(A - \\lambda I) = 0 \\]
+                        <p>di mana $I$ is matriks identitas.</p>
+                        
+                        <p class="mt-2"><strong>B. Mencari Vektor Eigen:</strong></p>
+                        <p>Masukkan $\\lambda$ yang didapat ke dalam persamaan homogen:</p>
+                        \\[ (A - \\lambda I)\\vec{v} = \\vec{0} \\]
+                        <p>Selesaikan SPL homogen ini dengan eliminasi Gauss-Jordan (RREF).</p>
+                        
+                        <p class="mt-2"><strong>C. Diagonalisasi:</strong></p>
+                        \\[ P^{-1}AP = D \\implies D = \\begin{bmatrix} \\lambda_1 & 0 & 0 \\\\ 0 & \\lambda_2 & 0 \\\\ 0 & 0 & \\lambda_3 \\end{bmatrix} \\]
+                        <p>di mana kolom-kolom matriks $P$ berisi basis-basis vektor eigen bebas linear yang bersesuaian dengan $\\lambda_i$ pada matriks diagonal $D$.</p>
+                    </div>
+                    
+                    <div class="alert-info mt-3" style="background: rgba(99,102,241,0.1); border-left: 4px solid var(--indigo); padding: 1rem; border-radius: 6px">
+                        <h5 style="color: var(--indigo); display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem">
+                            <i data-lucide="zap"></i> Tips Kreatif (Anti-Terkecoh)
+                        </h5>
+                        <p><strong>Trik Cek Cepat Nilai Eigen di Ujian!</strong> Gunakan hukum Trace dan Determinan untuk memastikan nilai eigen Anda benar:</p>
+                        <ul>
+                            <li>Jumlah nilai eigen ($\\lambda_1 + \\lambda_2 + ...$) **harus sama dengan** Trace matriks (jumlah angka di diagonal utama matriks $A$).</li>
+                            <li>Perkalian nilai eigen ($\\lambda_1 \\cdot \\lambda_2 \\cdot ...$) **harus sama dengan** determinan matriks $A$.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="theory-navigation mt-5" style="display: flex; justify-content: center">
+                    <button class="btn btn-primary btn-sm btn-nav-redirect" data-redirect="dashboard">
+                        <i data-lucide="layout-dashboard"></i> Kembali ke Dashboard Utama
                     </button>
                 </div>
             </div>

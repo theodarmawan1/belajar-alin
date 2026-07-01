@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let activeSoalATab = "pertanyaan";
     let activeSoalBTab = "pertanyaan";
     let activeSoalCTab = "pertanyaan";
+    let activeSoalDTab = "pertanyaan";
     let isVisualizerInit = false;
 
     // --- NAVIGASI SINGLE PAGE APPLICATION (SPA) ---
@@ -42,16 +43,18 @@ document.addEventListener("DOMContentLoaded", () => {
             "theory-2": "Babak 2: Persamaan Garis 3D",
             "theory-3": "Babak 3: Persamaan Bidang 3D",
             "theory-relations": "Hubungan Geometris",
+            "basic-theory": "Kumpulan Materi Dasar Aljabar Linear",
             "soal-a": "Latihan Soal Topic A: Garis & Bidang",
             "soal-b": "Latihan Soal Topic B: Vektor & Ruang Vektor",
             "soal-c": "Latihan Soal Topic C: Nilai Eigen",
+            "soal-d": "Latihan Soal Topic D: Operasi Matriks & SPL",
             "calc-3d": "Kalkulator Geometri 3D Interaktif",
             "calc-eigen": "Kalkulator Nilai Eigen & Diagonalisasi"
         };
         sectionTitle.textContent = titles[targetId] || "Aljabar Linear";
 
         // Beban konten sesuai pilihan
-        if (targetId.startsWith("theory-")) {
+        if (targetId.startsWith("theory-") || targetId === "basic-theory") {
             loadTheoryContent(targetId);
         } else if (targetId === "soal-a") {
             initSoalLayout("a");
@@ -59,6 +62,8 @@ document.addEventListener("DOMContentLoaded", () => {
             initSoalLayout("b");
         } else if (targetId === "soal-c") {
             initSoalLayout("c");
+        } else if (targetId === "soal-d") {
+            initSoalLayout("d");
         } else if (targetId === "calc-3d") {
             initCalculator3DInputs();
             if (!isVisualizerInit) {
@@ -161,10 +166,11 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- MODUL LATIHAN SOAL (TOPIC A, B, & C) ---
+    // --- MODUL LATIHAN SOAL (TOPIC A, B, C, & D) ---
     let currentSoalAIndex = 0;
     let currentSoalBIndex = 0;
     let currentSoalCIndex = 0;
+    let currentSoalDIndex = 0;
 
     function initSoalLayout(topic) {
         const listSidebar = document.getElementById(`soal-${topic}-list`);
@@ -173,7 +179,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Kosongkan list
         listSidebar.innerHTML = "";
 
-        const totalSoal = 9; // 0 sampai 8 = 9 soal untuk semua topik
+        const totalSoal = topic === "d" ? 5 : 9; // Topic D memiliki 5 soal, topik lainnya 9 soal
         
         for (let i = 0; i < totalSoal; i++) {
             const btn = document.createElement("button");
@@ -183,6 +189,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 btn.textContent = `Soal ${i}`;
             } else if (topic === "b") {
                 btn.textContent = `Soal B${i}`;
+            } else if (topic === "d") {
+                btn.textContent = `Soal ${i+1}`;
             } else {
                 btn.textContent = `Soal C${i}`;
             }
@@ -198,6 +206,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else if (topic === "b") {
                     currentSoalBIndex = i;
                     loadSoalContent("b", i);
+                } else if (topic === "d") {
+                    currentSoalDIndex = i;
+                    loadSoalContent("d", i);
                 } else {
                     currentSoalCIndex = i;
                     loadSoalContent("c", i);
@@ -229,8 +240,8 @@ document.addEventListener("DOMContentLoaded", () => {
         tabDiketahui.innerHTML = data.diketahui;
         tabJawaban.innerHTML = data.jawaban;
 
-        // Tambahkan tombol visualisasi 3D dinamis untuk Topic A & B
-        if (topic === "a" || (topic === "b" && [0, 1, 2, 4, 7, 8].includes(index))) {
+        // Tambahkan tombol visualisasi 3D dinamis untuk Topic A, B, & D
+        if (topic === "a" || (topic === "b" && [0, 1, 2, 4, 7, 8].includes(index)) || (topic === "d" && [1, 3].includes(index))) {
             const btnContainer = document.createElement("div");
             btnContainer.className = "mt-4 pt-3";
             btnContainer.style.borderTop = "1px dashed rgba(255, 255, 255, 0.1)";
@@ -239,7 +250,10 @@ document.addEventListener("DOMContentLoaded", () => {
             btn.className = "btn btn-primary btn-sm";
             btn.innerHTML = `<i data-lucide="eye"></i> Visualisasikan Soal Ini dalam 3D`;
             btn.addEventListener("click", () => {
-                visualizeExercisePreset(topic === "a" ? index : index + 10);
+                let presetIdx = index;
+                if (topic === "b") presetIdx = index + 10;
+                else if (topic === "d") presetIdx = index + 20;
+                visualizeExercisePreset(presetIdx);
             });
             btnContainer.appendChild(btn);
             tabPertanyaan.appendChild(btnContainer);
@@ -278,6 +292,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     activeSoalATab = targetTab;
                 } else if (topic === "b") {
                     activeSoalBTab = targetTab;
+                } else if (topic === "d") {
+                    activeSoalDTab = targetTab;
                 } else {
                     activeSoalCTab = targetTab;
                 }
@@ -919,6 +935,47 @@ document.addEventListener("DOMContentLoaded", () => {
                             <p><span class="badge" style="background:#3b82f6">Biru</span> Dokumen $\\mathbf{D}_2 \\approx (1, 1, 1)$ (Sim: $0.775$)</p>
                             <p><span class="badge" style="background:#a855f7">Ungu</span> Dokumen $\\mathbf{D}_3 \\approx (0, 0, 1)$ (Sim: $0.258$)</p>
                             <p>Vektor yang membentuk sudut terkecil dengan vektor Query (merah) adalah $\\mathbf{D}_2$ (biru), sehingga menduduki peringkat teratas dalam hasil pencarian.</p>
+                        </div>
+                    `;
+                } else if (index === 21) { // Soal D2
+                    Visualizer3D.drawLine([0, -5, 0], [1, -3, 0], 0x10b981); // Line 1
+                    Visualizer3D.drawLine([2, 0, 0], [5, -4, 0], 0x3b82f6); // Line 2
+                    Visualizer3D.drawPoint([-3, 4, 0], 0xf59e0b, 0.25); // Intersection
+                    
+                    outputEl.innerHTML = `
+                        <div class="solve-step">
+                            <h5>Visualisasi Eliminasi Gauss Soal 2 (Bidang Z = 0)</h5>
+                            <p><span class="badge" style="background:#10b981">Hijau</span> Garis $3x_1 + x_2 = -5$</p>
+                            <p><span class="badge" style="background:#3b82f6">Biru</span> Garis $4x_1 + 5x_2 = 8$</p>
+                            <p><span class="badge" style="background:#f59e0b">Jingga</span> Titik Potong $(-3, 4, 0)$</p>
+                            <p>Persamaan kedua $6x_1 + 2x_2 = -10$ berhimpit secara sempurna dengan persamaan pertama (hijau), sehingga sistem tereduksi secara konsisten ke satu titik potong tunggal.</p>
+                        </div>
+                    `;
+                } else if (index === 23) { // Soal D4
+                    // Loop 1 (Atas, Searah Jarum Jam) - Biru Muda
+                    Visualizer3D.drawVector([-3, 0, 0], [0, 3, 0], 0x3b82f6);
+                    Visualizer3D.drawVector([-3, 3, 0], [6, 0, 0], 0x3b82f6);
+                    Visualizer3D.drawVector([3, 3, 0], [0, -3, 0], 0x3b82f6);
+                    
+                    // Loop 2 (Bawah, Searah Jarum Jam) - Ungu
+                    Visualizer3D.drawVector([3, 0, 0], [0, -3, 0], 0xa855f7);
+                    Visualizer3D.drawVector([3, -3, 0], [-6, 0, 0], 0xa855f7);
+                    Visualizer3D.drawVector([-3, -3, 0], [0, 3, 0], 0xa855f7);
+                    
+                    // Cabang Tengah (Shared Resistor 1 Ohm, Arus I3 = I1 - I2) - Jingga
+                    Visualizer3D.drawVector([-3, 0, 0], [6, 0, 0], 0xf59e0b);
+                    
+                    // Tambahkan marker titik node A dan B
+                    Visualizer3D.drawPoint([-3, 0, 0], 0xef4444, 0.25);
+                    Visualizer3D.drawPoint([3, 0, 0], 0xef4444, 0.25);
+                    
+                    outputEl.innerHTML = `
+                        <div class="solve-step">
+                            <h5>Skematik Loop Arus 3D Hukum Kirchhoff (Bidang Z = 0)</h5>
+                            <p><span class="badge" style="background:#3b82f6">Biru</span> Loop 1 (Atas): Arus $I_1 = 2\\text{ A}$ (searah jarum jam)</p>
+                            <p><span class="badge" style="background:#a855f7">Ungu</span> Loop 2 (Bawah): Arus $I_2 = -6\\text{ A}$ (aktualnya berlawanan arah jarum jam karena negatif)</p>
+                            <p><span class="badge" style="background:#f59e0b">Jingga</span> Cabang Tengah: Arus bersama $I_3 = I_1 - I_2 = 8\\text{ A}$</p>
+                            <p><span class="badge" style="background:#ef4444">Merah</span> Titik Percabangan Node utama.</p>
                         </div>
                     `;
                 }
