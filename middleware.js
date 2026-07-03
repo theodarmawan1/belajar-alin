@@ -1,10 +1,10 @@
 /**
  * Vercel Edge Middleware for Session-Based Authentication.
- * This middleware:
- * 1. Allows public access to static assets (CSS, JS, images, fonts, favicon).
+ * This middleware follows the exact specifications of the implementation plan:
+ * 1. Bypasses authentication for "/login.html" and "/favicon.ico".
  * 2. Intercepts POST requests to "/login" to validate credentials, write the "session" cookie, and redirect.
- * 3. Redirects unauthenticated users to "/login" (Avoids /login.html to prevent cleanUrls redirect loops).
- * 4. Redirects authenticated users away from "/login" or "/login.html" back to "/".
+ * 3. Redirects unauthenticated users to "/login.html" with a 307 status.
+ * 4. Redirects authenticated users away from "/login.html" back to "/".
  */
 
 export const config = {
@@ -21,7 +21,31 @@ export default async function middleware(req) {
   const expectedUser = process.env.AUTH_USER;
   const expectedPass = process.env.AUTH_PASS;
 
-  // 1. Handle POST request to "/login" for credential validation
+  // 1. Bypass authentication for "/login.html" and "/favicon.ico"
+  if (pathname === '/login.html' || pathname === '/favicon.ico') {
+    // If authenticated user tries to access "/login.html", redirect them to "/"
+    const cookies = req.headers.get('cookie') || '';
+    const sessionToken = cookies
+      .split('; ')
+      .find(row => row.startsWith('session='))
+      ?.split('=')[1];
+
+    if (sessionToken && expectedUser && expectedPass) {
+      try {
+        const decoded = atob(sessionToken);
+        const [user, pwd] = decoded.split(':');
+        if (user === expectedUser && pwd === expectedPass) {
+          url.pathname = '/';
+          return Response.redirect(url, 307);
+        }
+      } catch (e) {
+        // Ignore invalid cookies for login page bypass
+      }
+    }
+    return;
+  }
+
+  // 2. Intercept POST requests to "/login" to validate credentials
   if (req.method === 'POST' && pathname === '/login') {
     try {
       const formData = await req.formData();
@@ -29,7 +53,7 @@ export default async function middleware(req) {
       const password = formData.get('password');
 
       if (expectedUser && expectedPass && username === expectedUser && password === expectedPass) {
-        // Successful login: Set "session" cookie and redirect to "/"
+        // Successful login: Set secure "session" cookie (HttpOnly, Secure, SameSite=Strict, 30 days max-age)
         const token = btoa(`${username}:${password}`);
         
         url.pathname = '/';
@@ -44,13 +68,13 @@ export default async function middleware(req) {
       console.error('Login form parsing error:', e);
     }
 
-    // Failed login: Redirect to "/login?error=1" (Clean URL without .html)
-    url.pathname = '/login';
+    // Failed login: Redirect to "/login.html?error=1"
+    url.pathname = '/login.html';
     url.searchParams.set('error', '1');
     return Response.redirect(url, 307);
   }
 
-  // 2. Verify if the "session" cookie is present and valid
+  // 3. Verify if the "session" cookie is present and valid
   const cookies = req.headers.get('cookie') || '';
   const sessionToken = cookies
     .split('; ')
@@ -62,7 +86,6 @@ export default async function middleware(req) {
     try {
       const decoded = atob(sessionToken);
       const [user, pwd] = decoded.split(':');
-
       if (user === expectedUser && pwd === expectedPass) {
         authenticated = true;
       }
@@ -71,15 +94,9 @@ export default async function middleware(req) {
     }
   }
 
-  // 3. Redirect unauthenticated users to "/login" (Allow both /login and /login.html to prevent cleanUrls rewrite loop)
-  if (!authenticated && pathname !== '/login' && pathname !== '/login.html') {
-    url.pathname = '/login';
-    return Response.redirect(url, 307);
-  }
-
-  // 4. Redirect authenticated users away from "/login" or "/login.html" back to "/"
-  if (authenticated && (pathname === '/login' || pathname === '/login.html')) {
-    url.pathname = '/';
+  // 4. Redirect unauthenticated users to "/login.html"
+  if (!authenticated) {
+    url.pathname = '/login.html';
     return Response.redirect(url, 307);
   }
 }
