@@ -3,8 +3,8 @@
  * This middleware:
  * 1. Allows public access to static assets (CSS, JS, images, fonts, favicon).
  * 2. Intercepts POST requests to "/login" to validate credentials, write the "session" cookie, and redirect.
- * 3. Redirects unauthenticated users to "/login.html".
- * 4. Redirects authenticated users away from "/login.html" back to "/".
+ * 3. Redirects unauthenticated users to "/login" (using clean URL to prevent loops with cleanUrls in vercel.json).
+ * 4. Redirects authenticated users away from "/login" back to "/".
  */
 
 export const config = {
@@ -44,8 +44,8 @@ export default async function middleware(req) {
       console.error('Login form parsing error:', e);
     }
 
-    // Failed login: Redirect to "/login.html?error=1"
-    url.pathname = '/login.html';
+    // Failed login: Redirect to "/login?error=1" (Clean URL without .html)
+    url.pathname = '/login';
     url.searchParams.set('error', '1');
     return Response.redirect(url, 307);
   }
@@ -71,14 +71,14 @@ export default async function middleware(req) {
     }
   }
 
-  // 3. Redirect unauthenticated users to "/login.html"
-  if (!authenticated && pathname !== '/login.html') {
-    url.pathname = '/login.html';
+  // 3. Redirect unauthenticated users to "/login" (Avoid /login.html to prevent cleanUrls redirect loops)
+  if (!authenticated && pathname !== '/login') {
+    url.pathname = '/login';
     return Response.redirect(url, 307);
   }
 
-  // 4. Redirect authenticated users away from "/login.html" back to "/"
-  if (authenticated && pathname === '/login.html') {
+  // 4. Redirect authenticated users away from "/login" back to "/"
+  if (authenticated && pathname === '/login') {
     url.pathname = '/';
     return Response.redirect(url, 307);
   }
