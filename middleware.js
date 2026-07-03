@@ -3,8 +3,8 @@
  * This middleware:
  * 1. Allows public access to static assets (CSS, JS, images, fonts, favicon).
  * 2. Intercepts POST requests to "/login" to validate credentials, write the "session" cookie, and redirect.
- * 3. Redirects unauthenticated users to "/login" (using clean URL to prevent loops with cleanUrls in vercel.json).
- * 4. Redirects authenticated users away from "/login" back to "/".
+ * 3. Redirects unauthenticated users to "/login" (Avoids /login.html to prevent cleanUrls redirect loops).
+ * 4. Redirects authenticated users away from "/login" or "/login.html" back to "/".
  */
 
 export const config = {
@@ -71,14 +71,14 @@ export default async function middleware(req) {
     }
   }
 
-  // 3. Redirect unauthenticated users to "/login" (Avoid /login.html to prevent cleanUrls redirect loops)
-  if (!authenticated && pathname !== '/login') {
+  // 3. Redirect unauthenticated users to "/login" (Allow both /login and /login.html to prevent cleanUrls rewrite loop)
+  if (!authenticated && pathname !== '/login' && pathname !== '/login.html') {
     url.pathname = '/login';
     return Response.redirect(url, 307);
   }
 
-  // 4. Redirect authenticated users away from "/login" back to "/"
-  if (authenticated && pathname === '/login') {
+  // 4. Redirect authenticated users away from "/login" or "/login.html" back to "/"
+  if (authenticated && (pathname === '/login' || pathname === '/login.html')) {
     url.pathname = '/';
     return Response.redirect(url, 307);
   }
