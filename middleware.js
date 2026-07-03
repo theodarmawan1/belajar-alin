@@ -5,6 +5,7 @@
  * 2. Intercepts POST requests to "/login" to validate credentials, write the "session" cookie, and redirect.
  * 3. Redirects unauthenticated users to "/login.html" with a 307 status.
  * 4. Redirects authenticated users away from "/login.html" back to "/".
+ * 5. Provides a secure "/login-debug" route to check if environment variables are set.
  */
 
 export const config = {
@@ -21,7 +22,27 @@ export default async function middleware(req) {
   const expectedUser = process.env.AUTH_USER;
   const expectedPass = process.env.AUTH_PASS;
 
-  // 1. Bypass authentication for "/login.html" and "/favicon.ico"
+  // 1. Secure debug endpoint to check if Vercel has loaded the Environment Variables
+  if (pathname === '/login-debug') {
+    return new Response(
+      JSON.stringify({
+        status: "OK",
+        auth_user_configured: !!expectedUser,
+        auth_user_length: expectedUser ? expectedUser.length : 0,
+        auth_pass_configured: !!expectedPass,
+        auth_pass_length: expectedPass ? expectedPass.length : 0,
+        message: (!expectedUser || !expectedPass) 
+          ? "Peringatan: Variabel lingkungan AUTH_USER atau AUTH_PASS belum terpasang atau ter-load di Vercel. Pastikan Anda melakukan Redeploy setelah menyimpan variables."
+          : "Kedua variabel lingkungan berhasil ter-load dengan benar."
+      }),
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json; charset=utf-8" }
+      }
+    );
+  }
+
+  // 2. Bypass authentication for "/login.html" and "/favicon.ico"
   if (pathname === '/login.html' || pathname === '/favicon.ico') {
     // If authenticated user tries to access "/login.html", redirect them to "/"
     const cookies = req.headers.get('cookie') || '';
@@ -45,36 +66,42 @@ export default async function middleware(req) {
     return;
   }
 
-  // 2. Intercept POST requests to "/login" to validate credentials
+  // 3. Intercept POST requests to "/login" to validate credentials
   if (req.method === 'POST' && pathname === '/login') {
     try {
       const formData = await req.formData();
-      const username = formData.get('username');
-      const password = formData.get('password');
+      const username = (formData.get('username') || '').trim();
+      const password = (formData.get('password') || '').trim();
+
+      // Debug log in Vercel Functions Logs
+      console.log(`Login attempt for user: "${username}". Configured expectedUser: "${expectedUser}".`);
 
       if (expectedUser && expectedPass && username === expectedUser && password === expectedPass) {
-        // Successful login: Set secure "session" cookie (HttpOnly, Secure, SameSite=Strict, 30 days max-age)
+        // Successful login: Generate session token (base64)
         const token = btoa(`${username}:${password}`);
         
+        // Construct a new Response with headers manually to avoid immutable header error from Response.redirect()
         url.pathname = '/';
-        const response = Response.redirect(url, 307);
-        response.headers.set(
-          'Set-Cookie',
-          `session=${token}; Path=/; Max-Age=2592000; HttpOnly; Secure; SameSite=Strict`
-        );
+        const response = new Response(null, {
+          status: 303,
+          headers: {
+            'Location': url.toString(),
+            'Set-Cookie': `session=${token}; Path=/; Max-Age=2592000; HttpOnly; Secure; SameSite=Strict`
+          }
+        });
         return response;
       }
     } catch (e) {
       console.error('Login form parsing error:', e);
     }
 
-    // Failed login: Redirect to "/login.html?error=1"
+    // Failed login: Redirect to "/login.html?error=1" using 303 See Other (forces GET method to prevent 405 on static files)
     url.pathname = '/login.html';
     url.searchParams.set('error', '1');
-    return Response.redirect(url, 307);
+    return Response.redirect(url, 303);
   }
 
-  // 3. Verify if the "session" cookie is present and valid
+  // 4. Verify if the "session" cookie is present and valid
   const cookies = req.headers.get('cookie') || '';
   const sessionToken = cookies
     .split('; ')
@@ -94,7 +121,7 @@ export default async function middleware(req) {
     }
   }
 
-  // 4. Redirect unauthenticated users to "/login.html"
+  // 5. Redirect unauthenticated users to "/login.html"
   if (!authenticated) {
     url.pathname = '/login.html';
     return Response.redirect(url, 307);
